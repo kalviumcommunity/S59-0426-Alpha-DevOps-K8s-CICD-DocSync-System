@@ -19,6 +19,11 @@ Traditional deployment (SSH into a server, `git pull`, `npm install`) introduces
 - [Artifact Flow Diagram](#artifact-flow-diagram)
 - [How a Git Commit Becomes a Running Container](#how-a-git-commit-becomes-a-running-container)
 - [Key Technical Terms](#key-technical-terms)
+- [The Big Three Domains](#the-big-three-domains)
+- [Responsibility Matrix](#responsibility-matrix)
+- [CI vs. CD — Two Different Questions](#ci-vs-cd--two-different-questions)
+- [Responsibility Flow Diagram](#responsibility-flow-diagram)
+- [Reflection: Why Separation of Concerns Makes Deployment Safe](#reflection-why-separation-of-concerns-makes-deployment-safe)
 - [Project Structure](#project-structure)
 - [Local Development](#local-development)
 - [CI/CD Pipeline](#cicd-pipeline)
@@ -213,6 +218,200 @@ Common registries:
 - **Docker Hub** — public default registry
 - **GitHub Container Registry (GHCR)** — integrated with GitHub Actions
 - **Amazon ECR / Google GCR / Azure ACR** — cloud-provider managed registries
+
+---
+
+## The Big Three Domains
+
+Every production system is governed by three distinct domains. Each has a clear role, and blurring the lines between them is where outages are born.
+
+### 1. Application Code — Logic + Unit Tests
+
+The application code is the **what** — the business logic that solves user problems. For DocSync, this is the Express server, the WebSocket real-time sync layer, and the `DocumentStore` with version-conflict detection.
+
+**Responsibilities:**
+- Implement features and business rules (document CRUD, conflict resolution, version history).
+- Include unit tests that prove the logic works in isolation (`tests/document.test.js`).
+- Define its own dependencies (`package.json`) but **never** decide how or where it gets deployed.
+
+Application code knows nothing about Docker, Kubernetes, or registries. It doesn't know if it's running on a developer's laptop or a 50-node production cluster — and that's by design. This separation means developers can focus entirely on correctness without worrying about infrastructure.
+
+### 2. The Pipeline (CI/CD) — Orchestration + Validation
+
+The pipeline is the **gatekeeper** — the automated system that decides whether code is safe to merge and how it reaches production. In DocSync, this is the GitHub Actions workflow (`.github/workflows/ci-cd.yml`).
+
+**Responsibilities:**
+- **CI (Continuous Integration):** Run linting, execute unit tests, and build the Docker image. If any step fails, the pipeline halts and the code never becomes an artifact.
+- **CD (Continuous Deployment):** Tag the image with the Git SHA and semantic version, push it to the container registry, and update the Kubernetes deployment to reference the new image.
+- Enforce quality gates — no human should manually decide "this is ready." The pipeline's pass/fail is the single source of truth.
+
+The pipeline never contains business logic. It doesn't know what a "document" is. It only knows: "Did the tests pass? Then build and ship."
+
+### 3. Infrastructure (Kubernetes) — Execution + Health
+
+Infrastructure is the **where and how** — the runtime platform that takes a sealed image and keeps it running reliably. In DocSync, this is Kubernetes via the manifests in `k8s/`.
+
+**Responsibilities:**
+- Pull the exact image specified in the Deployment manifest from the registry.
+- Run the specified number of replicas (3 Pods for DocSync) across the cluster.
+- **Self-heal:** If a container crashes, Kubernetes automatically restarts it. If a node fails, it reschedules Pods to healthy nodes.
+- Manage rolling updates: gradually replace old Pods with new ones during a deployment, ensuring zero downtime.
+- Enforce resource limits (CPU, memory) and run health checks (liveness/readiness probes).
+
+Kubernetes never builds images, runs tests, or reads source code. It only cares about one thing: "Here's an image — keep it running."
+
+---
+
+## Responsibility Matrix
+
+This table maps every action in the deployment lifecycle to its owner. No action should have ambiguous ownership.
+
+| Action | Owner | Why This Owner? |
+|---|---|---|
+| Writing application logic | **Application Code** | Developers own feature implementation |
+| Writing & maintaining unit tests | **Application Code** | Tests validate business logic, not infrastructure |
+| Running unit tests | **CI Pipeline** | Automated execution on every commit ensures consistency |
+| Running linter/static analysis | **CI Pipeline** | Code quality checks are a merge prerequisite |
+| Building the Docker image | **CI Pipeline** | Only CI has the authority to create deployable artifacts |
+| Tagging images (SHA + semver) | **CI Pipeline** | Tags must map 1:1 to tested commits — manual tagging is error-prone |
+| Pushing images to the registry | **CI Pipeline** | CI authenticates with the registry; developers don't push images directly |
+| Updating Kubernetes manifests | **CD Pipeline** | Deployment configuration is updated after a validated artifact exists |
+| Applying manifests to the cluster | **CD Pipeline** | Automated deployment ensures the correct image reaches the cluster |
+| Running containers from images | **Infrastructure (K8s)** | K8s pulls the image and manages container lifecycle |
+| Self-healing (restarting crashed containers) | **Infrastructure (K8s)** | K8s monitors Pod health and restarts failures automatically |
+| Scaling replicas up/down | **Infrastructure (K8s)** | K8s responds to load or manual scaling commands |
+| Rolling updates & rollbacks | **Infrastructure (K8s)** | K8s manages zero-downtime replacements using its rollout strategy |
+| Health checks (liveness/readiness) | **Infrastructure (K8s)** | Probes are defined in manifests but executed and enforced by K8s |
+
+---
+
+## CI vs. CD — Two Different Questions
+
+CI and CD are often grouped together, but they ask fundamentally different questions and serve different purposes.
+
+### CI asks: "Is this code safe to merge?"
+
+Continuous Integration runs **before** code enters the main branch. Its job is to catch problems early:
+
+- Does the code compile/parse without errors?
+- Do all unit tests pass?
+- Does the linter flag any style or quality issues?
+- Can a Docker image be built successfully from this code?
+
+If any answer is "no," the PR is blocked. CI protects the codebase from broken commits. It is a **pre-merge** gate.
+
+```
+Pull Request opened
+       ↓
+  ┌─────────────┐
+  │   CI asks:   │
+  │ "Safe to     │──── NO ──→ PR blocked, developer fixes code
+  │  merge?"     │
+  └──────┬──────┘
+         │ YES
+         ↓
+   Code merges into main
+```
+
+### CD asks: "How do we safely run this in production?"
+
+Continuous Deployment runs **after** code is merged. Its job is to get the validated artifact into the cluster safely:
+
+- Tag the Docker image with the commit SHA and version.
+- Push the image to the container registry.
+- Update the Kubernetes Deployment to reference the new image.
+- Use a rolling update strategy so users experience zero downtime.
+
+CD never re-tests the code — that's CI's job. CD trusts that CI already validated the artifact and focuses entirely on safe delivery.
+
+```
+   Code merged into main
+         ↓
+  ┌──────────────┐
+  │   CD asks:    │
+  │ "How to run   │──→ Tag image → Push to registry → Update K8s manifest
+  │  safely?"     │
+  └──────┬───────┘
+         ↓
+   Rolling update in Kubernetes (zero downtime)
+```
+
+**Why the separation matters:** A developer opening a PR should never accidentally trigger a production deployment. CI validates; CD ships. By splitting them, you ensure that code review and testing happen in isolation from deployment, and a failed test can never result in broken production.
+
+---
+
+## Responsibility Flow Diagram
+
+This diagram highlights the **handoff points** between CI, CD, and Infrastructure, with the critical "Artifact Handoff" where CI passes a sealed Docker image — not raw code — to CD.
+
+```
+  ┌─────────────────────────────────────────────────────────────────────────────────┐
+  │                                                                                 │
+  │   CODE REPOSITORY                                                               │
+  │   ┌──────────────────┐                                                         │
+  │   │  Developer pushes │                                                         │
+  │   │  code / opens PR  │                                                         │
+  │   └────────┬─────────┘                                                         │
+  │            │                                                                    │
+  │ ═══════════╪════════════════════════════════════════════════════════════════     │
+  │  CI DOMAIN │ (Continuous Integration)                                           │
+  │ ═══════════╪════════════════════════════════════════════════════════════════     │
+  │            ▼                                                                    │
+  │   ┌──────────────────┐     ┌──────────────────┐     ┌──────────────────┐       │
+  │   │  Checkout Code   │────▶│   Run Linter +   │────▶│   Build Docker   │       │
+  │   │                  │     │   Unit Tests     │     │   Image          │       │
+  │   └──────────────────┘     └──────────────────┘     └────────┬─────────┘       │
+  │                                                              │                  │
+  │                              CI output: Pass/Fail            │ Pass             │
+  │                              (blocks merge if fail)          │                  │
+  │                                                              ▼                  │
+  │ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │
+  │                     ★ ARTIFACT HANDOFF POINT ★                                  │
+  │            CI passes a DOCKER IMAGE (not source code) to CD                     │
+  │ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─   │
+  │                                                              │                  │
+  │ ═══════════╪════════════════════════════════════════════════╪═══════════════    │
+  │  CD DOMAIN │ (Continuous Deployment)                        │                   │
+  │ ═══════════╪════════════════════════════════════════════════╪═══════════════    │
+  │            │                                                ▼                   │
+  │            │    ┌──────────────────┐     ┌──────────────────────┐               │
+  │            │    │  Tag Image with  │────▶│  Push Image to       │               │
+  │            │    │  SHA + semver    │     │  Container Registry  │               │
+  │            │    └──────────────────┘     └──────────┬───────────┘               │
+  │            │                                       │                            │
+  │            │    ┌──────────────────┐                │                            │
+  │            │    │  Update K8s      │◀───────────────┘                            │
+  │            │    │  Deployment YAML │                                             │
+  │            │    └────────┬─────────┘                                             │
+  │                          │                                                      │
+  │ ═════════════════════════╪══════════════════════════════════════════════════     │
+  │  INFRASTRUCTURE DOMAIN   │ (Kubernetes)                                         │
+  │ ═════════════════════════╪══════════════════════════════════════════════════     │
+  │                          ▼                                                      │
+  │   ┌──────────────────┐     ┌──────────────────┐     ┌──────────────────┐       │
+  │   │  Pull Image from │────▶│  Rolling Update   │────▶│  Health Checks   │       │
+  │   │  Registry        │     │  (replace Pods)   │     │  + Self-healing  │       │
+  │   └──────────────────┘     └──────────────────┘     └──────────────────┘       │
+  │                                                                                 │
+  └─────────────────────────────────────────────────────────────────────────────────┘
+```
+
+**Key observations:**
+- The boundary between CI and CD is the **Artifact Handoff** — the Docker image. CI produces it; CD consumes it. Raw source code never crosses this boundary.
+- Kubernetes never interacts with the CI pipeline or the code repository. It only knows about the registry and the image reference in its manifests.
+- Each domain can fail independently without cascading: a linter failure in CI doesn't crash production; a Pod crash in K8s doesn't block new PRs.
+
+---
+
+## Reflection: Why Separation of Concerns Makes Deployment Safe
+
+### Why is it dangerous for application code to "deploy itself" directly?
+
+When application code has the ability to trigger its own deployment — for example, a post-commit hook that runs `scp` to copy files to a server — you lose every safety net. There is no quality gate between "developer wrote code" and "code is live in production." A single typo in a hot-fix commit could take down the entire service because nothing verified the change first. Worse, there's no artifact to roll back to: the previous state was overwritten on the server. Self-deploying code also means that any developer with commit access effectively has unrestricted production access, which is a security and compliance risk. The pipeline exists specifically to be a neutral, automated barrier that enforces "test first, build second, deploy last."
+
+### How does separating CI from CD enable safe Pull Request reviews?
+
+When CI and CD are separate, a Pull Request triggers *only* CI — tests run, the linter checks style, and the build is verified. The reviewer sees a green checkmark and can focus on code quality, logic, and design without worrying about deployment consequences. The code is evaluated in isolation: "Does this change work correctly?" is answered *before* "Should we ship this?" is even asked. If CI and CD were combined into one step, merging a PR would immediately deploy to production, making code review a high-stakes gamble instead of a thoughtful process. Separation means reviewers can approve with confidence, knowing that deployment is a controlled, subsequent step with its own safeguards (rolling updates, health checks, rollback capability).
 
 ---
 
