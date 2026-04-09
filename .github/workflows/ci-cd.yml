@@ -19,6 +19,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Pre-build environment check
+        run: |
+          echo "Verifying required tools..."
+          node --version
+          npm --version
+          docker --version
+          git --version
+          test -f Dockerfile && echo "✔ Dockerfile found" || (echo "✘ Dockerfile missing" && exit 1)
+          test -f package.json && echo "✔ package.json found" || (echo "✘ package.json missing" && exit 1)
+          echo "✔ All pre-build checks passed"
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -28,10 +39,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run linter
+      - name: Run linter (ESLint quality gate)
         run: npm run lint
 
-      - name: Run tests
+      - name: Run unit tests
         run: npm test
 
   build-and-push:
