@@ -24,7 +24,7 @@ Traditional deployment (SSH into a server, `git pull`, `npm install`) introduces
 - [CI vs. CD — Two Different Questions](#ci-vs-cd--two-different-questions)
 - [Responsibility Flow Diagram](#responsibility-flow-diagram)
 - [Reflection: Why Separation of Concerns Makes Deployment Safe](#reflection-why-separation-of-concerns-makes-deployment-safe)
-- [Project Structure](#project-structure)
+- [Repository Structure & Branching Model](#repository-structure--branching-model)
 - [Local Development](#local-development)
 - [CI/CD Pipeline](#cicd-pipeline)
 - [Kubernetes Deployment](#kubernetes-deployment)
@@ -415,27 +415,77 @@ When CI and CD are separate, a Pull Request triggers *only* CI — tests run, th
 
 ---
 
-## Project Structure
+## Repository Structure & Branching Model
+
+### Folder Structure
 
 ```
 S59-0426-Alpha-DevOps-K8s-CICD-DocSync-System/
-├── .github/
+│
+├── src/                         # Application source code
+│   ├── server.js                #   Express + WebSocket server
+│   └── document.js              #   Document sync & conflict resolution logic
+│
+├── tests/                       # Unit tests (mirrors src/ structure)
+│   └── document.test.js         #   Tests for DocumentStore CRUD + versioning
+│
+├── scripts/                     # Automation / DevOps helper scripts
+│   └── pre-build-check.sh       #   Validates environment before Docker build
+│
+├── k8s/                         # Kubernetes manifests (Infrastructure-as-Code)
+│   ├── deployment.yaml          #   Deployment: image ref, replicas, probes, resources
+│   └── service.yaml             #   Service: exposes the app inside the cluster
+│
+├── .github/                     # CI/CD pipeline configuration
 │   └── workflows/
-│       └── ci-cd.yml            # GitHub Actions CI/CD pipeline
-├── k8s/
-│   ├── deployment.yaml          # Kubernetes Deployment manifest
-│   └── service.yaml             # Kubernetes Service manifest
-├── src/
-│   ├── server.js                # Express + WebSocket server
-│   └── document.js              # Document sync logic
-├── tests/
-│   └── document.test.js         # Unit tests
-├── Dockerfile                   # Multi-stage Docker build
-├── .dockerignore                # Exclude unnecessary files from image
-├── package.json                 # Node.js dependencies
-├── VIDEO_SCRIPT.md              # Video demonstration script
-└── README.md                    # This file
+│       └── ci-cd.yml            #   GitHub Actions: lint → test → build → push
+│
+├── docs/                        # Project documentation
+│   ├── PIPELINE.md              #   Stage-by-stage CI/CD pipeline explanation
+│   ├── DEVOPS-SETUP.md          #   Local tooling setup guide & checklist
+│   └── verification-output.txt  #   Tool verification terminal output
+│
+├── Dockerfile                   # Multi-stage Docker build (builder + production)
+├── .dockerignore                # Files excluded from the Docker build context
+├── .eslintrc.json               # ESLint configuration (quality gate rules)
+├── package.json                 # Node.js dependencies & npm scripts
+├── package-lock.json            # Locked dependency tree (used by npm ci)
+└── README.md                    # This file — architecture & workflow documentation
 ```
+
+| Folder | Purpose |
+|---|---|
+| `src/` | Application source code — business logic only, no deployment concerns |
+| `tests/` | Unit tests that validate `src/` logic in isolation |
+| `scripts/` | Portable automation scripts for environment validation and build helpers |
+| `k8s/` | Kubernetes manifests — Infrastructure-as-Code defining how the app runs in a cluster |
+| `.github/workflows/` | CI/CD pipeline — the automated gatekeeper between code and production |
+| `docs/` | Project documentation — pipeline guides, setup checklists, verification logs |
+
+### Branching Strategy
+
+We use a **Feature-Branching model** where `main` is the protected default branch and all work is developed in isolated feature branches.
+
+```
+main (protected — always deployable)
+ │
+ ├── feat/artifact-flow-documentation      ← Phase 1: README, diagrams, technical terms
+ │
+ ├── feat/cicd-responsibility-boundaries   ← Phase 2: Big Three Domains, CI vs CD, matrix
+ │
+ ├── setup/devops-workstation              ← DevOps tooling setup & verification
+ │
+ └── feat/pipeline-quality-gates           ← Pipeline configs, ESLint, automation scripts
+```
+
+**Rules:**
+- **`main` is protected** — no direct pushes. All changes arrive through Pull Requests.
+- **Branch naming convention** — prefixes indicate the type of work:
+  - `feat/` — new feature or documentation
+  - `setup/` — environment or tooling setup
+  - `fix/` — bug fixes
+- **Every PR triggers CI** — linting and tests must pass before merge is allowed.
+- **Only merged PRs trigger CD** — Docker image build and registry push only happen on push to `main`.
 
 ---
 
