@@ -10,7 +10,7 @@ Use a predictable prefix so reviewers can map proofs to assignments:
 docs/proofs/<assignment-id>-<topic>.png
 ```
 
-Example: `4.8-git-version.png`, `4.9-github-pr.png`, `4.10-git-status.png`, `4.11-ls-la.png`
+Example: `4.8-git-version.png`, `4.9-github-pr.png`, `4.10-git-status.png`, `4.11-ls-la.png`, `4.12-docker-ps.png`
 
 ---
 
@@ -98,6 +98,27 @@ Example: `4.8-git-version.png`, `4.9-github-pr.png`, `4.10-git-status.png`, `4.1
 
 - For **script execution**, include the **command line** and **exit** (or success message) in frame.  
 - Link to this checklist from the PR description when opening **PR4** for review.  
+
+---
+
+## Assignment 4.12 / A-05 — Containerization concepts (`spr5-containerization-concepts`)
+
+**Related doc:** [`docs/assignments/A-05-containerization-concepts.md`](../assignments/A-05-containerization-concepts.md)
+
+### Proof checklist
+
+| # | Requirement | Command (or action) | Captured? |
+|---|----------------|---------------------|-----------|
+| 1 | Docker CLI / Engine version | `docker --version` | [ ] |
+| 2 | Local images | `docker images` | [ ] |
+| 3 | Running / all containers | `docker ps` and/or `docker ps -a` | [ ] |
+| 4 | Lifecycle understanding | Screenshot of diagram or **§ Container lifecycle** in assignment doc / notes | [ ] |
+| 5 | Project containerization narrative | `README.md` or related docs in IDE/browser (crop to relevant section) | [ ] |
+
+### Submission notes
+
+- For **lifecycle**, exporting a PDF or PNG from slides is acceptable if terminal-only proof is insufficient.  
+- Link to this checklist from the PR description when opening **PR5** for review.  
 
 ---
 

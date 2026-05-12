@@ -3,7 +3,7 @@
 **Course / initiative:** DevOps with Kubernetes & CI/CD  
 **Project codename:** DocSync — Real-Time Document Editing Service  
 **Repository:** `S59-0426-Alpha-DevOps-K8s-CICD-DocSync-System`  
-**Document version:** 1.5  
+**Document version:** 1.6  
 **Last updated:** May 12, 2026  
 **Active team size:** 2 (Samarth, Gouri)  
 
@@ -225,7 +225,7 @@ S59-0426-Alpha-DevOps-K8s-CICD-DocSync-System/
 | A-02 | Kubernetes / CI-CD | 4.9 — Understanding DevOps Principles, CI/CD Concepts, and Delivery Pipelines | `spr2-devops-principles` | In Review | Samarth |
 | A-03 | Docker / Containerization | 4.10 — Exploring Git Repositories, Branching Models, and Commit Conventions | `spr3-git-workflow` | In Review | Samarth |
 | A-04 | Docker / Containerization | 4.11 — Linux Filesystem Structure & Permissions for DevOps Workflows | `spr4-linux-permissions` | In Review | Samarth |
-| A-05 | Docker / Containerization | Unit test suite for DocSync | `pr/A-05-unit-tests` | TBD | Samarth |
+| A-05 | Docker / Containerization | 4.12 — Introduction to Containers and Containerization Concepts | `spr5-containerization-concepts` | In Review | Samarth |
 | A-06 | Docker / Containerization | Dockerfile v1 (single-stage) | `pr/A-06-dockerfile-v1` | TBD | Samarth |
 | A-07 | Docker / Containerization | Dockerfile hardening (multi-stage, non-root) | `pr/A-07-dockerfile-hardening` | TBD | Samarth |
 | A-08 | Docker / Containerization | `.dockerignore` & image size tuning | `pr/A-08-dockerignore` | TBD | Samarth |
@@ -363,6 +363,7 @@ kubectl rollout undo deployment/docsync
 | 1.3 | 2026-05-12 | Samarth | Sprint #3 PR2: A-02 / 4.9 DevOps principles doc, proofs checklist, tracker (`spr2-devops-principles`) |
 | 1.4 | 2026-05-12 | Samarth | Sprint #3 PR3: A-03 / 4.10 git workflow doc, proofs checklist, tracker (`spr3-git-workflow`) |
 | 1.5 | 2026-05-12 | Samarth | Sprint #3 PR4: A-04 / 4.11 Linux permissions doc, proofs checklist, tracker (`spr4-linux-permissions`) |
+| 1.6 | 2026-05-12 | Samarth | Sprint #3 PR5: A-05 / 4.12 containerization concepts doc, proofs checklist, tracker (`spr5-containerization-concepts`) |
 
 ---
 
