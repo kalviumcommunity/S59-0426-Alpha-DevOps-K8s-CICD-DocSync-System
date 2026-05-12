@@ -10,7 +10,7 @@ Use a predictable prefix so reviewers can map proofs to assignments:
 docs/proofs/<assignment-id>-<topic>.png
 ```
 
-Example: `4.17-kubectl-version.png`, `4.21-rollout-status.png`, `4.22-get-svc.png`, `4.25-deployment-probes.png`, `4.25-script-health-check.png`
+Example: `4.17-kubectl-version.png`, `4.25-script-health-check.png`, `4.36-pipeline-docs.png`, `4.36-gha-workflow.png`, `4.36-pr-checks.png`
 
 ---
 
@@ -411,6 +411,27 @@ Combined capture: **`docker build -t docsync:basic .`**, **`docker images`** (sh
 
 - If **no cluster** access, capture manifest review notes plus instructor approval for shared environment screenshots.  
 - Link to this checklist from the PR description when opening **PR18** for review.  
+
+---
+
+## Assignment 4.36 / A-19 — CI/CD pipeline stages (`spr19-cicd-pipeline-stages`)
+
+**Related doc:** [`docs/assignments/A-19-cicd-pipeline-stages.md`](../assignments/A-19-cicd-pipeline-stages.md) · **Stage table:** [`docs/pipeline/PIPELINE_STAGES.md`](../pipeline/PIPELINE_STAGES.md)
+
+### Proof checklist
+
+| # | Requirement | Command (or action) | Captured? |
+|---|----------------|---------------------|-----------|
+| 1 | Pipeline documentation | `docs/pipeline/PIPELINE_STAGES.md` or assignment excerpt | [ ] |
+| 2 | GitHub Actions workflow | Actions run UI for `DocSync CI/CD Pipeline` | [ ] |
+| 3 | PR checks | PR **Checks** tab (lint + test) | [ ] |
+| 4 | Stage explanation | Narrative from assignment or `PIPELINE_DESIGN.md` | [ ] |
+| 5 | Validation checklist | This section or assignment checklist (completed rows) | [ ] |
+
+### Submission notes
+
+- Redact **org names**, **internal URLs**, or **tokens** if required.  
+- Link to this checklist from the PR description when opening **PR19** for review.  
 
 ---
 
