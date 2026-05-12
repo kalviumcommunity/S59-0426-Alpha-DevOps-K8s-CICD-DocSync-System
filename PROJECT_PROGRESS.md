@@ -3,7 +3,7 @@
 **Course / initiative:** DevOps with Kubernetes & CI/CD  
 **Project codename:** DocSync — Real-Time Document Editing Service  
 **Repository:** `S59-0426-Alpha-DevOps-K8s-CICD-DocSync-System`  
-**Document version:** 1.9  
+**Document version:** 2.0  
 **Last updated:** May 12, 2026  
 **Active team size:** 2 (Samarth, Gouri)  
 
@@ -229,7 +229,7 @@ S59-0426-Alpha-DevOps-K8s-CICD-DocSync-System/
 | A-06 | Docker / Containerization | 4.13 — Understanding Docker Architecture: Images, Containers, and Layers | `spr6-docker-architecture` | In Review | Samarth |
 | A-07 | Docker / Containerization | 4.14 — Writing Dockerfiles: Base Images, Layers, Caching, and Best Practices | `spr7-dockerfile-basics` | In Review | Samarth |
 | A-08 | Docker / Containerization | 4.14 — Dockerfile Optimization: Layers, Caching, Security, and Best Practices | `spr8-dockerfile-optimization` | In Review | Samarth |
-| A-09 | Docker / Containerization | Local `docker run` & health validation | `pr/A-09-docker-run-health` | TBD | Samarth |
+| A-09 | Docker / Containerization | 4.15 — Building, Running, and Debugging Containers Locally | `spr9-build-run-containers` | In Review | Samarth |
 | A-10 | Kubernetes / CI-CD | Kubernetes Deployment manifest | `pr/A-10-k8s-deployment` | TBD | Gouri |
 | A-11 | Kubernetes / CI-CD | Kubernetes Service manifest | `pr/A-11-k8s-service` | TBD | Gouri |
 | A-12 | Kubernetes / CI-CD | Probes & resource limits tuning | `pr/A-12-probes-resources` | TBD | Gouri |
@@ -367,6 +367,7 @@ kubectl rollout undo deployment/docsync
 | 1.7 | 2026-05-12 | Samarth | Sprint #3 PR6: A-06 / 4.13 Docker architecture doc, proofs checklist, tracker (`spr6-docker-architecture`) |
 | 1.8 | 2026-05-12 | Samarth | Sprint #3 PR7: A-07 / 4.14 Dockerfile basics, Dockerfile update, proofs, tracker (`spr7-dockerfile-basics`) |
 | 1.9 | 2026-05-12 | Samarth | Sprint #3 PR8: A-08 / 4.14 Dockerfile optimization, .dockerignore, proofs, tracker (`spr8-dockerfile-optimization`) |
+| 2.0 | 2026-05-12 | Samarth | Sprint #3 PR9: A-09 / 4.15 local build-run doc, docker-local-run.sh, proofs, tracker (`spr9-build-run-containers`) |
 
 ---
 

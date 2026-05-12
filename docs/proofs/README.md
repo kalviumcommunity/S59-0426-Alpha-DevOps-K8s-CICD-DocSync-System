@@ -10,7 +10,7 @@ Use a predictable prefix so reviewers can map proofs to assignments:
 docs/proofs/<assignment-id>-<topic>.png
 ```
 
-Example: `4.8-git-version.png`, `4.14-docker-lab-terminal.png`, `4.14-opt-docker-history.png`
+Example: `4.14-docker-lab-terminal.png`, `4.15-docker-ps.png`, `4.15-script-run.png`
 
 ---
 
@@ -193,6 +193,28 @@ Combined capture: **`docker build -t docsync:basic .`**, **`docker images`** (sh
 
 - Prefer **one PR** attaching all eight proofs or a single consolidated terminal capture where unambiguous.  
 - Link to this checklist from the PR description when opening **PR8** for review.  
+
+---
+
+## Assignment 4.15 / A-09 — Build, run, debug locally (`spr9-build-run-containers`)
+
+**Related doc:** [`docs/assignments/A-09-build-run-containers.md`](../assignments/A-09-build-run-containers.md)
+
+### Proof checklist
+
+| # | Requirement | Command (or action) | Captured? |
+|---|----------------|---------------------|-----------|
+| 1 | Image build | `docker build -t docsync:local .` | [ ] |
+| 2 | Local images | `docker images` (show `docsync:local`) | [ ] |
+| 3 | Container start | `docker run --name docsync-local -p 3000:3000 docsync:local` (or `-d`) | [ ] |
+| 4 | Running processes | `docker ps` | [ ] |
+| 5 | Health check | `curl http://localhost:3000/health` | [ ] |
+| 6 | Helper script | `./scripts/docker-local-run.sh` (after `chmod +x`) | [ ] |
+
+### Submission notes
+
+- If port **3000** is busy, use **`HOST_PORT=3001 ./scripts/docker-local-run.sh`** and capture `curl` against that port.  
+- Link to this checklist from the PR description when opening **PR9** for review.  
 
 ---
 
