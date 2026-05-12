@@ -148,6 +148,12 @@ Example: `4.8-git-version.png`, `4.9-github-pr.png`, `4.10-git-status.png`, `4.1
 
 **Related doc:** [`docs/assignments/A-07-dockerfile-basics.md`](../assignments/A-07-dockerfile-basics.md)
 
+### Submitted proof (terminal)
+
+Combined capture: **`docker build -t docsync:basic .`**, **`docker images`** (showing `docsync:basic`), and **`docker run`** with “DocSync server running on port 3000”. The `curl` health check appears in the same session history.
+
+![Assignment 4.14 — build, images, and run](4.14-docker-lab-terminal.png)
+
 ### Proof checklist
 
 | # | Requirement | Command (or action) | Captured? |
@@ -160,6 +166,7 @@ Example: `4.8-git-version.png`, `4.9-github-pr.png`, `4.10-git-status.png`, `4.1
 
 ### Submission notes
 
+- **Submitted artifact:** [`4.14-docker-lab-terminal.png`](4.14-docker-lab-terminal.png) (build + images + run in one capture).  
 - Redact registry credentials or internal hostnames if visible in terminal tabs.  
 - Link to this checklist from the PR description when opening **PR7** for review.  
 

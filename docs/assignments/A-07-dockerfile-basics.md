@@ -132,10 +132,12 @@ curl -sSf http://localhost:3000/health
 | # | Proof | Suggested filename |
 |---|--------|--------------------|
 | 1 | `Dockerfile` in editor (major sections visible) | `docs/proofs/4.14-dockerfile.png` |
-| 2 | Terminal: successful `docker build` tail | `docs/proofs/4.14-docker-build.png` |
-| 3 | `docker images` showing `docsync:basic` | `docs/proofs/4.14-docker-images.png` |
-| 4 | `docker run` logs / running container | `docs/proofs/4.14-docker-run.png` |
-| 5 | `curl` or browser hitting `/health` | `docs/proofs/4.14-health-endpoint.png` |
+| 2 | Terminal: successful `docker build` tail | `docs/proofs/4.14-docker-build.png` (see also **combined:** [`4.14-docker-lab-terminal.png`](../proofs/4.14-docker-lab-terminal.png)) |
+| 3 | `docker images` showing `docsync:basic` | `docs/proofs/4.14-docker-images.png` (same combined file) |
+| 4 | `docker run` logs / running container | `docs/proofs/4.14-docker-run.png` (same combined file) |
+| 5 | `curl` or browser hitting `/health` | `docs/proofs/4.14-health-endpoint.png` (command visible in same session as [`4.14-docker-lab-terminal.png`](../proofs/4.14-docker-lab-terminal.png)) |
+
+> **Submitted:** [`4.14-docker-lab-terminal.png`](../proofs/4.14-docker-lab-terminal.png) — terminal capture covering successful build, `docsync:basic` in `docker images`, container start, and `curl` to `/health` in history.
 
 ---
 
