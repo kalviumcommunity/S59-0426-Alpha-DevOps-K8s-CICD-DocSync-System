@@ -1,0 +1,37 @@
+# ReplicaSet — DocSync (Sprint #3 · A-15 / 4.20 learning manifest)
+# spec.replicas: desired number of identical Pods (>= 2 per assignment)
+# selector.matchLabels MUST match template.metadata.labels or the API rejects the object
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: docsync-replicaset-learning
+  labels:
+    app.kubernetes.io/name: docsync
+    app.kubernetes.io/component: replicaset-learning
+    sprint.kalvium.dev/assignment: a15-replicaset-demo
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      # Owned Pods carry these labels only — avoids clashing with k8s/deployment.yaml (app: docsync)
+      app: docsync-learning-rs
+      sprint.kalvium.dev/assignment: a15-replicaset-demo
+  template:
+    metadata:
+      labels:
+        app: docsync-learning-rs
+        sprint.kalvium.dev/assignment: a15-replicaset-demo
+    spec:
+      containers:
+        - name: docsync
+          image: ghcr.io/username/docsync:v1.2.0
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+          env:
+            - name: NODE_ENV
+              value: "production"
+            - name: PORT
+              value: "3000"

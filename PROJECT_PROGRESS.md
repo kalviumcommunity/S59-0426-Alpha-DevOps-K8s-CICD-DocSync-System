@@ -3,7 +3,7 @@
 **Course / initiative:** DevOps with Kubernetes & CI/CD  
 **Project codename:** DocSync — Real-Time Document Editing Service  
 **Repository:** `S59-0426-Alpha-DevOps-K8s-CICD-DocSync-System`  
-**Document version:** 2.5  
+**Document version:** 2.6  
 **Last updated:** May 12, 2026  
 **Active team size:** 2 (Samarth, Gouri)  
 
@@ -235,7 +235,7 @@ S59-0426-Alpha-DevOps-K8s-CICD-DocSync-System/
 | A-12 | Kubernetes / CI-CD | 4.17 — Introduction to Kubernetes and Cloud-Native Architecture | `spr12-kubernetes-intro` | In Review | Gouri |
 | A-13 | Kubernetes / CI-CD | 4.18 — Understanding Kubernetes Cluster Architecture and Control Plane | `spr13-cluster-architecture` | In Review | Gouri |
 | A-14 | Kubernetes / CI-CD | 4.19 — Setting Up a Local Kubernetes Cluster (kind / Minikube / k3s) | `spr14-local-k8s-cluster` | In Review | Gouri |
-| A-15 | Docker / Containerization | GitHub Actions build & GHCR push | `pr/A-15-gha-build-push` | TBD | Samarth |
+| A-15 | Kubernetes / CI-CD | 4.20 — Understanding Kubernetes Objects: Pods and ReplicaSets | `spr15-pods-replicasets` | In Review | Gouri |
 | A-16 | Kubernetes / CI-CD | CD scaffold / deploy job | `pr/A-16-cd-scaffold` | TBD | Gouri |
 | A-17 | Kubernetes / CI-CD | Pipeline documentation | `pr/A-17-pipeline-docs` | TBD | Gouri |
 | A-18 | Kubernetes / CI-CD | Rollback runbook & verification | `pr/A-18-rollback-runbook` | TBD | Gouri |
@@ -373,6 +373,7 @@ kubectl rollout undo deployment/docsync
 | 2.3 | 2026-05-12 | Gouri | Sprint #3 PR12: A-12 / 4.17 Kubernetes intro doc, proofs, tracker (`spr12-kubernetes-intro`) |
 | 2.4 | 2026-05-12 | Gouri | Sprint #3 PR13: A-13 / 4.18 cluster architecture doc, K8S_CLUSTER_ARCHITECTURE.md, proofs (`spr13-cluster-architecture`) |
 | 2.5 | 2026-05-12 | Gouri | Sprint #3 PR14: A-14 / 4.19 local K8s cluster doc, k8s-local-cluster-check.sh, proofs (`spr14-local-k8s-cluster`) |
+| 2.6 | 2026-05-12 | Gouri | Sprint #3 PR15: A-15 / 4.20 Pods & ReplicaSets doc, k8s/pod.yaml, k8s/replicaset.yaml, k8s-pod-check.sh, proofs (`spr15-pods-replicasets`) |
 
 ---
 

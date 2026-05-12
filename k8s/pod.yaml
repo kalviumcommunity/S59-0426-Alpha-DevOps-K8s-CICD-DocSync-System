@@ -1,0 +1,29 @@
+# Standalone Pod — DocSync (Sprint #3 · A-15 / 4.20 learning manifest)
+# IMPORTANT: Labels are intentionally distinct from k8s/deployment.yaml (selector app: docsync)
+# so this Pod is not adopted by the production-style Deployment.
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  # name: unique Pod identity in this namespace
+  name: docsync-standalone-learning
+  labels:
+    app.kubernetes.io/name: docsync
+    # component distinguishes this learning Pod from Deployment/ReplicaSet-managed replicas
+    app.kubernetes.io/component: standalone-learning
+    sprint.kalvium.dev/assignment: a15-pod-demo
+spec:
+  containers:
+    - name: docsync
+      # Replace ghcr.io/username with your org/user before pulling in a real cluster
+      image: ghcr.io/username/docsync:v1.2.0
+      ports:
+        # containerPort documents the port the process listens on (Service wiring uses this later)
+        - name: http
+          containerPort: 3000
+          protocol: TCP
+      env:
+        - name: NODE_ENV
+          value: "production"
+        - name: PORT
+          value: "3000"
