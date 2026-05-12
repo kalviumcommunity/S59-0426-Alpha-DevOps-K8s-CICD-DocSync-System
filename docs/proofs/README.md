@@ -10,7 +10,7 @@ Use a predictable prefix so reviewers can map proofs to assignments:
 docs/proofs/<assignment-id>-<topic>.png
 ```
 
-Example: `4.8-git-version.png`, `4.9-github-pr.png`, `4.10-git-status.png`, `4.11-ls-la.png`, `4.12-docker-ps.png`, `4.13-docker-history.png`
+Example: `4.8-git-version.png`, `4.9-github-pr.png`, `4.10-git-status.png`, `4.11-ls-la.png`, `4.12-docker-ps.png`, `4.13-docker-history.png`, `4.14-docker-build.png`
 
 ---
 
@@ -141,6 +141,34 @@ Example: `4.8-git-version.png`, `4.9-github-pr.png`, `4.10-git-status.png`, `4.1
 
 - For **`docker inspect`**, JSON is long—crop to **State**, **Config**, or use `--format` in the screenshot caption.  
 - Link to this checklist from the PR description when opening **PR6** for review.  
+
+---
+
+## Assignment 4.14 / A-07 — Dockerfile basics (`spr7-dockerfile-basics`)
+
+**Related doc:** [`docs/assignments/A-07-dockerfile-basics.md`](../assignments/A-07-dockerfile-basics.md)
+
+### Submitted proof (terminal)
+
+Combined capture: **`docker build -t docsync:basic .`**, **`docker images`** (showing `docsync:basic`), and **`docker run`** with “DocSync server running on port 3000”. The `curl` health check appears in the same session history.
+
+![Assignment 4.14 — build, images, and run](4.14-docker-lab-terminal.png)
+
+### Proof checklist
+
+| # | Requirement | Command (or action) | Captured? |
+|---|----------------|---------------------|-----------|
+| 1 | Dockerfile source | IDE / GitHub view of `Dockerfile` | [ ] |
+| 2 | Successful image build | `docker build -t docsync:basic .` (tail output) | [ ] |
+| 3 | Image present locally | `docker images` (show `docsync:basic`) | [ ] |
+| 4 | Running container | `docker run --rm -p 3000:3000 docsync:basic` (logs or second terminal) | [ ] |
+| 5 | Health endpoint | `curl http://localhost:3000/health` or browser | [ ] |
+
+### Submission notes
+
+- **Submitted artifact:** [`4.14-docker-lab-terminal.png`](4.14-docker-lab-terminal.png) (build + images + run in one capture).  
+- Redact registry credentials or internal hostnames if visible in terminal tabs.  
+- Link to this checklist from the PR description when opening **PR7** for review.  
 
 ---
 
