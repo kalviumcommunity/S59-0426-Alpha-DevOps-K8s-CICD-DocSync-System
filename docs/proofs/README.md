@@ -10,7 +10,7 @@ Use a predictable prefix so reviewers can map proofs to assignments:
 docs/proofs/<assignment-id>-<topic>.png
 ```
 
-Example: `4.8-git-version.png`
+Example: `4.8-git-version.png`, `4.9-github-pr.png`
 
 ---
 
@@ -35,6 +35,27 @@ Example: `4.8-git-version.png`
 - Prefer **PNG** or **PDF** exports; ensure text is readable at 100% zoom.  
 - If using **light/dark** themes, maximize contrast for academic submission.  
 - Link to this checklist from the PR description when opening **PR1** for review.  
+
+---
+
+## Assignment 4.9 / A-02 — DevOps principles & CI/CD (`spr2-devops-principles`)
+
+**Related doc:** [`docs/assignments/A-02-devops-principles.md`](../assignments/A-02-devops-principles.md)
+
+### Proof checklist
+
+| # | Requirement | Command (or action) | Captured? |
+|---|----------------|---------------------|-----------|
+| 1 | Current Git branch | `git branch` or IDE branch indicator (screenshot) | [ ] |
+| 2 | Commit on branch | `git log -1` or GitHub commit view for this branch | [ ] |
+| 3 | GitHub Pull Request | PR page showing title, checks, reviewers (redact if needed) | [ ] |
+| 4 | Repository workflow | GitHub **Actions** tab: workflow run for this repo/branch | [ ] |
+| 5 | Recent history | `git log --oneline -n 10` (or equivalent graph) | [ ] |
+
+### Submission notes
+
+- For **workflow** proof, include the run **name**, **branch**, and **conclusion** (success/failure) in frame.  
+- Link to this checklist from the PR description when opening **PR2** for review.  
 
 ---
 

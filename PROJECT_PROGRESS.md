@@ -3,7 +3,7 @@
 **Course / initiative:** DevOps with Kubernetes & CI/CD  
 **Project codename:** DocSync — Real-Time Document Editing Service  
 **Repository:** `S59-0426-Alpha-DevOps-K8s-CICD-DocSync-System`  
-**Document version:** 1.2  
+**Document version:** 1.3  
 **Last updated:** May 12, 2026  
 **Active team size:** 2 (Samarth, Gouri)  
 
@@ -222,7 +222,7 @@ S59-0426-Alpha-DevOps-K8s-CICD-DocSync-System/
 | Assignment # | Stream | Task Name | PR Name | Status | Assigned |
 |--------------|--------|-----------|---------|--------|----------|
 | A-01 | Docker / Containerization | 4.8 — Setting Up DevOps Workstation: Git, Docker, kubectl, Helm, and CLI Tools | `spr1-devops-workstation` | In Review | Samarth |
-| A-02 | Docker / Containerization | Branch protection & review policy | `pr/A-02-branch-protection` | TBD | Samarth |
+| A-02 | Kubernetes / CI-CD | 4.9 — Understanding DevOps Principles, CI/CD Concepts, and Delivery Pipelines | `spr2-devops-principles` | In Review | Samarth |
 | A-03 | Docker / Containerization | Local Node environment parity | `pr/A-03-node-parity` | TBD | Samarth |
 | A-04 | Docker / Containerization | ESLint & npm scripts | `pr/A-04-eslint-scripts` | TBD | Samarth |
 | A-05 | Docker / Containerization | Unit test suite for DocSync | `pr/A-05-unit-tests` | TBD | Samarth |
@@ -360,6 +360,7 @@ kubectl rollout undo deployment/docsync
 | 1.0 | 2026-05-12 | Project team | Initial PROJECT_PROGRESS.md aligned with repository state |
 | 1.1 | 2026-05-12 | Samarth, Gouri | Two-member roster; assignment tracker and responsibility matrix updated |
 | 1.2 | 2026-05-12 | Samarth | Sprint #3 PR1: A-01 / 4.8 workstation docs, proofs checklist, tracker (`spr1-devops-workstation`) |
+| 1.3 | 2026-05-12 | Samarth | Sprint #3 PR2: A-02 / 4.9 DevOps principles doc, proofs checklist, tracker (`spr2-devops-principles`) |
 
 ---
 
