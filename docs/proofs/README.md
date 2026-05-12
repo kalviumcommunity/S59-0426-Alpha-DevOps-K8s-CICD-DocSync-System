@@ -10,7 +10,7 @@ Use a predictable prefix so reviewers can map proofs to assignments:
 docs/proofs/<assignment-id>-<topic>.png
 ```
 
-Example: `4.16-docker-push.png`, `4.17-kubectl-version.png`, `4.17-get-nodes.png`
+Example: `4.17-kubectl-version.png`, `4.18-get-nodes.png`, `4.18-get-pods-A.png`
 
 ---
 
@@ -280,6 +280,26 @@ Combined capture: **`docker build -t docsync:basic .`**, **`docker images`** (sh
 
 - If you **lack** a live cluster, screenshot the **error** plus your **kubeconfig context** list (`kubectl config get-contexts`) and note the blocker for the instructor.  
 - Link to this checklist from the PR description when opening **PR12** for review.  
+
+---
+
+## Assignment 4.18 / A-13 — Cluster architecture (`spr13-cluster-architecture`)
+
+**Related doc:** [`docs/assignments/A-13-cluster-architecture.md`](../assignments/A-13-cluster-architecture.md) · **Architecture:** [`docs/architecture/K8S_CLUSTER_ARCHITECTURE.md`](../architecture/K8S_CLUSTER_ARCHITECTURE.md)
+
+### Proof checklist
+
+| # | Requirement | Command (or action) | Captured? |
+|---|----------------|---------------------|-----------|
+| 1 | Nodes | `kubectl get nodes` | [ ] |
+| 2 | Node detail | `kubectl describe node <name>` | [ ] |
+| 3 | Architecture | Diagram or `K8S_CLUSTER_ARCHITECTURE.md` / assignment excerpt | [ ] |
+| 4 | All Pods | `kubectl get pods -A` | [ ] |
+
+### Submission notes
+
+- Redact **internal IPs** or **cloud account IDs** if your institution requires it.  
+- Link to this checklist from the PR description when opening **PR13** for review.  
 
 ---
 

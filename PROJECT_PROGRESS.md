@@ -3,7 +3,7 @@
 **Course / initiative:** DevOps with Kubernetes & CI/CD  
 **Project codename:** DocSync — Real-Time Document Editing Service  
 **Repository:** `S59-0426-Alpha-DevOps-K8s-CICD-DocSync-System`  
-**Document version:** 2.3  
+**Document version:** 2.4  
 **Last updated:** May 12, 2026  
 **Active team size:** 2 (Samarth, Gouri)  
 
@@ -233,7 +233,7 @@ S59-0426-Alpha-DevOps-K8s-CICD-DocSync-System/
 | A-10 | Docker / Containerization | 4.15 — Container debugging (logs, inspect, exec, troubleshooting) | `spr10-container-debugging` | In Review | Samarth |
 | A-11 | Docker / Containerization | 4.16 — Managing Docker Images and Registries (Docker Hub / GHCR) | `spr11-docker-registry-ghcr` | In Review | Samarth |
 | A-12 | Kubernetes / CI-CD | 4.17 — Introduction to Kubernetes and Cloud-Native Architecture | `spr12-kubernetes-intro` | In Review | Gouri |
-| A-13 | Kubernetes / CI-CD | Local cluster bring-up (kind/minikube) | `pr/A-13-local-cluster` | TBD | Gouri |
+| A-13 | Kubernetes / CI-CD | 4.18 — Understanding Kubernetes Cluster Architecture and Control Plane | `spr13-cluster-architecture` | In Review | Gouri |
 | A-14 | Kubernetes / CI-CD | GitHub Actions CI (lint + test) | `pr/A-14-gha-ci` | TBD | Gouri |
 | A-15 | Docker / Containerization | GitHub Actions build & GHCR push | `pr/A-15-gha-build-push` | TBD | Samarth |
 | A-16 | Kubernetes / CI-CD | CD scaffold / deploy job | `pr/A-16-cd-scaffold` | TBD | Gouri |
@@ -371,6 +371,7 @@ kubectl rollout undo deployment/docsync
 | 2.1 | 2026-05-12 | Samarth | Sprint #3 PR10: A-10 / 4.15 debugging doc, docker-debug-check.sh, proofs, tracker (`spr10-container-debugging`) |
 | 2.2 | 2026-05-12 | Samarth | Sprint #3 PR11: A-11 / 4.16 GHCR registry doc, tagging strategy, docker-tag-ghcr.sh, proofs (`spr11-docker-registry-ghcr`) |
 | 2.3 | 2026-05-12 | Gouri | Sprint #3 PR12: A-12 / 4.17 Kubernetes intro doc, proofs, tracker (`spr12-kubernetes-intro`) |
+| 2.4 | 2026-05-12 | Gouri | Sprint #3 PR13: A-13 / 4.18 cluster architecture doc, K8S_CLUSTER_ARCHITECTURE.md, proofs (`spr13-cluster-architecture`) |
 
 ---
 
