@@ -3,7 +3,7 @@
 **Course / initiative:** DevOps with Kubernetes & CI/CD  
 **Project codename:** DocSync — Real-Time Document Editing Service  
 **Repository:** `S59-0426-Alpha-DevOps-K8s-CICD-DocSync-System`  
-**Document version:** 3.0  
+**Document version:** 3.1  
 **Last updated:** May 12, 2026  
 **Active team size:** 2 (Samarth, Gouri)  
 
@@ -85,8 +85,9 @@ Supporting: ESLint, `npm ci`, `wget` (image health check), GitHub Actions `docke
 ### 3.5 CI/CD setup
 
 - [x] Workflow `DocSync CI/CD Pipeline` (`.github/workflows/ci-cd.yml`)  
-- [x] Jobs: **CI** (lint → test), **build-and-push** (after CI, on `main` push), **deploy-and-verify** (documented CD steps)  
-- [x] GHCR login via `GITHUB_TOKEN`, image metadata via `docker/metadata-action`  
+- [x] Jobs: **CI** (checkout → Node 20 → `npm ci` → lint → test on PR + `main`), **build-and-push** (`docker/metadata-action` + build/push, **`main` push only**), **deploy-and-verify** (scaffold; optional live apply via **`KUBECONFIG_B64`**)  
+- [x] GHCR login via **`GITHUB_TOKEN`** with job permission **`packages: write`**; image tags **`latest`** + short **commit SHA**  
+- [x] Reference: `docs/pipeline/GITHUB_ACTIONS_DOCKER_AUTOMATION.md`  
 
 ### 3.6 Application setup
 
@@ -98,7 +99,7 @@ Supporting: ESLint, `npm ci`, `wget` (image health check), GitHub Actions `docke
 
 - [x] Automated **unit** and **lint** execution in CI on every qualifying event  
 - [x] Docker image **build and push** to GHCR on successful `main` push  
-- [x] CD job currently **simulates** cluster steps (echo-based); real `kubectl apply` pending cluster credentials  
+- [x] CD job defaults to **scaffold** output; optional **`KUBECONFIG_B64`** enables authenticated `kubectl apply` + `rollout status` in Actions (course clusters only)  
 - [x] Supplementary verification notes in `docs/verification-output.txt` (as available in repo)  
 
 ---
@@ -147,14 +148,16 @@ Supporting: ESLint, `npm ci`, `wget` (image health check), GitHub Actions `docke
 
 | Workflow file | Purpose |
 |---------------|---------|
-| `.github/workflows/ci-cd.yml` | End-to-end DocSync pipeline (CI + artifact + CD scaffold) |
+| `.github/workflows/ci-cd.yml` | End-to-end DocSync pipeline (CI + GHCR image + CD scaffold / optional `kubectl`) |
+| `docs/pipeline/GITHUB_ACTIONS_DOCKER_AUTOMATION.md` | A-20 reference: triggers, jobs, GHCR auth, tagging, optional kubeconfig |
 
 **Triggers:** `push` and `pull_request` to `main`.
 
 ### 6.2 Build automation
 
-- [x] Pre-build: Node, npm, Docker, Git version checks; `Dockerfile` / `package.json` presence  
-- [x] `npm ci` for reproducible installs  
+- [x] **CI** job: Node 20, `npm ci`, lint, test (no Docker prerequisite in CI)  
+- [x] **Local** optional: `scripts/pre-build-check.sh` for workstation tool checks  
+- [x] `npm ci` for reproducible installs in Actions  
 
 ### 6.3 Test automation
 
@@ -164,13 +167,13 @@ Supporting: ESLint, `npm ci`, `wget` (image health check), GitHub Actions `docke
 ### 6.4 Docker image automation
 
 - [x] `docker/login-action` → GHCR  
-- [x] `docker/metadata-action` for tags and labels  
+- [x] `docker/metadata-action` for tags (**`latest`** + short **commit SHA**) and OCI labels  
 - [x] `docker/build-push-action` with `push: true` on `main`  
 
 ### 6.5 Kubernetes deployment automation
 
-- [x] Documented steps in CD job (checkout, would update manifest image, `kubectl apply`, rollout status)  
-- [ ] Live `kubectl` from Actions (requires kubeconfig / cloud integration secrets)  
+- [x] CD job: **echo scaffold** by default; **optional live `kubectl apply`** when repository secret **`KUBECONFIG_B64`** (base64 kubeconfig) is configured  
+- [ ] Broader GitOps / cloud identity integration — *planned / environment-specific*  
 
 ### 6.6 Secrets management
 
@@ -193,7 +196,8 @@ S59-0426-Alpha-DevOps-K8s-CICD-DocSync-System/
 │   ├── PIPELINE.md
 │   ├── PIPELINE_DESIGN.md
 │   ├── pipeline/
-│   │   └── PIPELINE_STAGES.md
+│   │   ├── PIPELINE_STAGES.md
+│   │   └── GITHUB_ACTIONS_DOCKER_AUTOMATION.md
 │   └── verification-output.txt
 ├── k8s/
 │   ├── deployment.yaml
@@ -243,7 +247,7 @@ S59-0426-Alpha-DevOps-K8s-CICD-DocSync-System/
 | A-17 | Kubernetes / CI-CD | 4.22 — Configuring Kubernetes Services (ClusterIP, NodePort) | `spr17-k8s-services` | In Review | Gouri |
 | A-18 | Kubernetes / CI-CD | 4.25 — Implementing Health Checks: Liveness and Readiness Probes | `spr18-health-checks-probes` | In Review | Gouri |
 | A-19 | Kubernetes / CI-CD | 4.36 — Understanding CI/CD Pipeline Design and Workflow Stages | `spr19-cicd-pipeline-stages` | In Review | Gouri |
-| A-20 | Kubernetes / CI-CD | Sprint retrospective & demo assets | `pr/A-20-sprint-retro-demo` | TBD | Gouri |
+| A-20 | Kubernetes / CI-CD | 4.37–4.40 — GitHub Actions CI, Docker automation, tagging, secure GHCR push | `spr20-github-actions-docker` | In Review | Gouri |
 
 **Status legend (for team use):** `Not Started` · `In Progress` · `In Review` · `Done` · `Blocked`
 
@@ -383,6 +387,7 @@ kubectl rollout undo deployment/docsync
 | 2.8 | 2026-05-12 | Gouri | Sprint #3 PR17: A-17 / 4.22 Services doc, service.yaml rename+comments, service-nodeport.yaml, k8s-service-check.sh, proofs (`spr17-k8s-services`) |
 | 2.9 | 2026-05-12 | Gouri | Sprint #3 PR18: A-18 / 4.25 probes doc, deployment probe comments, k8s-health-check.sh, proofs (`spr18-health-checks-probes`) |
 | 3.0 | 2026-05-12 | Gouri | Sprint #3 PR19: A-19 / 4.36 CI/CD pipeline stages, docs/pipeline/PIPELINE_STAGES.md, proofs (`spr19-cicd-pipeline-stages`) |
+| 3.1 | 2026-05-12 | Gouri | Sprint #3 PR20: A-20 / 4.37–4.40 Actions+Docker+GHCR, workflow hardening, GITHUB_ACTIONS_DOCKER_AUTOMATION.md, proofs (`spr20-github-actions-docker`) |
 
 ---
 

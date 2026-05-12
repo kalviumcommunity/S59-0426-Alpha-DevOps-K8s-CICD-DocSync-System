@@ -13,7 +13,7 @@ This document is the **tabular** source of truth for **stage purpose**, **toolin
 | # | Stage | Purpose | Tools / automation | Primary inputs | Primary outputs | Failure handling | Production-readiness notes |
 |---|--------|---------|-------------------|----------------|-----------------|------------------|----------------------------|
 | 1 | **Source / checkout** | Pin the workspace to the **triggering commit** | `actions/checkout@v4` | Git ref + token | Source tree at `${{ github.sha }}` | Step fails → entire job fails; rerun workflow | Use **immutable SHAs** for audits; tag releases for humans |
-| 2 | **Environment verification** | Fail fast if required tools/files missing | Shell in `ci` job (`node`, `npm`, `docker`, `git`, file checks) | Workflow default image | Console log + exit **0** | Missing Dockerfile / `package.json` → **exit 1** | Extend with `cosign` / `syft` when hardening supply chain |
+| 2 | **Environment verification** | *(Optional locally — e.g. `scripts/pre-build-check.sh`; CI focuses on Node gates.)* | Not a separate Actions step in default workflow | — | — | — | Prevents bloating PR feedback loops |
 | 3 | **Install dependencies** | **Reproducible** Node dependencies | `actions/setup-node@v4` + `npm ci` | `package-lock.json` | `node_modules/` | Lockfile drift → `npm ci` fails → **block PR** | Prefer **`npm ci`** over `npm install` in CI |
 | 4 | **Lint / static analysis** | Catch style & static bugs before runtime | `npm run lint` (ESLint) | Source + config | Pass/fail exit code | Non-zero → **PR checks red**; no image job | Add **typecheck** / **format check** if adopting TS/stricter gates |
 | 5 | **Unit test** | Validate application logic | `npm test` | Source + tests | Pass/fail + coverage (if configured) | Non-zero → **block** merge signal | Keep tests **fast**; split integration tests if needed |
@@ -25,7 +25,7 @@ This document is the **tabular** source of truth for **stage purpose**, **toolin
 | 11 | **Verification** | Prove workload healthy post-change | *Designed:* `kubectl rollout status`, `/health`, log tail | Cluster API + Service VIP | Green checks in monitoring | Probe/HTTP failures → alert + **rollback** | Synthetic checks + **SLIs** beyond single `/health` |
 | 12 | **Rollback / recovery** | Restore last known good | *Operational:* `kubectl rollout undo`, Git revert, GitOps sync | Previous digest + manifests | Stable traffic path | Human + runbook until automated guardrails exist | Automate **verify → auto-undo** only after observability trust |
 
-> **Note:** Rows **10–12** are **scaffolded** in the current workflow (echo/documentation) until a secure, non-interactive **`kubectl`** credential is available for this course environment.
+> **Note:** Rows **10–11** default to a **documented scaffold**. To run **live** `kubectl apply`, add repository secret **`KUBECONFIG_B64`** (base64-encoded kubeconfig) — see [`GITHUB_ACTIONS_DOCKER_AUTOMATION.md`](GITHUB_ACTIONS_DOCKER_AUTOMATION.md). **Never** commit kubeconfig or PATs to git.
 
 ---
 
@@ -35,7 +35,7 @@ This document is the **tabular** source of truth for **stage purpose**, **toolin
 |--------------|----------------------|
 | **`ci`** | 1–5 |
 | **`build-and-push`** | 1, 6–9 (checkout repeated for isolation) |
-| **`deploy-and-verify`** | 10–11 (documented today) |
+| **`deploy-and-verify`** | 10–11 (**scaffold** by default; **optional live `kubectl`** when repo secret `KUBECONFIG_B64` is set — see [`GITHUB_ACTIONS_DOCKER_AUTOMATION.md`](GITHUB_ACTIONS_DOCKER_AUTOMATION.md)) |
 
 **Triggers**
 
@@ -62,5 +62,7 @@ This document is the **tabular** source of truth for **stage purpose**, **toolin
 | Path | Role |
 |------|------|
 | [`../assignments/A-19-cicd-pipeline-stages.md`](../assignments/A-19-cicd-pipeline-stages.md) | Assignment **4.36 / A-19** narrative |
+| [`../assignments/A-20-github-actions-docker.md`](../assignments/A-20-github-actions-docker.md) | Assignment **4.37–4.40 / A-20** narrative |
 | [`../PIPELINE_DESIGN.md`](../PIPELINE_DESIGN.md) | Deep-dive rationale per headline stage |
+| [`GITHUB_ACTIONS_DOCKER_AUTOMATION.md`](GITHUB_ACTIONS_DOCKER_AUTOMATION.md) | **A-20 / 4.37–4.40** — Actions + Docker + GHCR reference |
 | [`../../.github/workflows/ci-cd.yml`](../../.github/workflows/ci-cd.yml) | Executable pipeline definition |
