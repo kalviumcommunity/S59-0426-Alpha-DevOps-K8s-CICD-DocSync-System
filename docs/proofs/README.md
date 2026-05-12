@@ -10,7 +10,7 @@ Use a predictable prefix so reviewers can map proofs to assignments:
 docs/proofs/<assignment-id>-<topic>.png
 ```
 
-Example: `4.17-kubectl-version.png`, `4.25-script-health-check.png`, `4.36-pipeline-docs.png`, `4.36-gha-workflow.png`, `4.36-pr-checks.png`
+Example: `4.17-kubectl-version.png`, `4.25-script-health-check.png`, `4.36-pipeline-docs.png`, `4.37-workflow-yaml.png`, `4.38-docker-build-push.png`, `4.40-ghcr-package.png`
 
 ---
 
@@ -432,6 +432,28 @@ Combined capture: **`docker build -t docsync:basic .`**, **`docker images`** (sh
 
 - Redact **org names**, **internal URLs**, or **tokens** if required.  
 - Link to this checklist from the PR description when opening **PR19** for review.  
+
+---
+
+## Assignments 4.37–4.40 / A-20 — GitHub Actions + Docker + GHCR (`spr20-github-actions-docker`)
+
+**Related doc:** [`docs/assignments/A-20-github-actions-docker.md`](../assignments/A-20-github-actions-docker.md) · **Automation reference:** [`docs/pipeline/GITHUB_ACTIONS_DOCKER_AUTOMATION.md`](../pipeline/GITHUB_ACTIONS_DOCKER_AUTOMATION.md)
+
+### Proof checklist
+
+| # | Requirement | Command (or action) | Captured? |
+|---|----------------|---------------------|-----------|
+| 1 | Workflow YAML | `.github/workflows/ci-cd.yml` (editor) | [ ] |
+| 2 | Successful Actions run | GitHub Actions UI for green `main` run | [ ] |
+| 3 | Lint + test job | Job log: `CI: Checkout → Install → Lint → Test` | [ ] |
+| 4 | Docker build/push job | Job log: `Docker: Build → Push GHCR` | [ ] |
+| 5 | GHCR package | Packages → `ghcr.io/<org>/<repo>` | [ ] |
+| 6 | Image tags | Tags showing **`latest`** + **commit SHA** | [ ] |
+
+### Submission notes
+
+- **Never** screenshot or paste `GITHUB_TOKEN`, kubeconfig, or `KUBECONFIG_B64` values.  
+- Link to this checklist from the PR description when opening **PR20** for review.  
 
 ---
 
