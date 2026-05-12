@@ -10,7 +10,7 @@ Use a predictable prefix so reviewers can map proofs to assignments:
 docs/proofs/<assignment-id>-<topic>.png
 ```
 
-Example: `4.8-git-version.png`, `4.9-github-pr.png`, `4.10-git-status.png`
+Example: `4.8-git-version.png`, `4.9-github-pr.png`, `4.10-git-status.png`, `4.11-ls-la.png`
 
 ---
 
@@ -77,6 +77,27 @@ Example: `4.8-git-version.png`, `4.9-github-pr.png`, `4.10-git-status.png`
 
 - For **commit history** vs **git log**, include one terminal capture and one GitHub capture so reviewers can correlate SHAs.  
 - Link to this checklist from the PR description when opening **PR3** for review.  
+
+---
+
+## Assignment 4.11 / A-04 — Linux filesystem & permissions (`spr4-linux-permissions`)
+
+**Related doc:** [`docs/assignments/A-04-linux-permissions.md`](../assignments/A-04-linux-permissions.md)
+
+### Proof checklist
+
+| # | Requirement | Command (or action) | Captured? |
+|---|----------------|---------------------|-----------|
+| 1 | Current directory | `pwd` | [ ] |
+| 2 | Detailed listing | `ls -la` (repo root or `scripts/`) | [ ] |
+| 3 | Make script executable | `chmod +x <script>` then `ls -l` showing `x` | [ ] |
+| 4 | Run script | `./scripts/pre-build-check.sh` or lab copy (terminal output) | [ ] |
+| 5 | File permissions | `ls -l` on selected files (modes + owner readable) | [ ] |
+
+### Submission notes
+
+- For **script execution**, include the **command line** and **exit** (or success message) in frame.  
+- Link to this checklist from the PR description when opening **PR4** for review.  
 
 ---
 
