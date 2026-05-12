@@ -3,7 +3,7 @@
 **Course / initiative:** DevOps with Kubernetes & CI/CD  
 **Project codename:** DocSync — Real-Time Document Editing Service  
 **Repository:** `S59-0426-Alpha-DevOps-K8s-CICD-DocSync-System`  
-**Document version:** 2.0  
+**Document version:** 2.1  
 **Last updated:** May 12, 2026  
 **Active team size:** 2 (Samarth, Gouri)  
 
@@ -230,7 +230,7 @@ S59-0426-Alpha-DevOps-K8s-CICD-DocSync-System/
 | A-07 | Docker / Containerization | 4.14 — Writing Dockerfiles: Base Images, Layers, Caching, and Best Practices | `spr7-dockerfile-basics` | In Review | Samarth |
 | A-08 | Docker / Containerization | 4.14 — Dockerfile Optimization: Layers, Caching, Security, and Best Practices | `spr8-dockerfile-optimization` | In Review | Samarth |
 | A-09 | Docker / Containerization | 4.15 — Building, Running, and Debugging Containers Locally | `spr9-build-run-containers` | In Review | Samarth |
-| A-10 | Kubernetes / CI-CD | Kubernetes Deployment manifest | `pr/A-10-k8s-deployment` | TBD | Gouri |
+| A-10 | Docker / Containerization | 4.15 — Container debugging (logs, inspect, exec, troubleshooting) | `spr10-container-debugging` | In Review | Samarth |
 | A-11 | Kubernetes / CI-CD | Kubernetes Service manifest | `pr/A-11-k8s-service` | TBD | Gouri |
 | A-12 | Kubernetes / CI-CD | Probes & resource limits tuning | `pr/A-12-probes-resources` | TBD | Gouri |
 | A-13 | Kubernetes / CI-CD | Local cluster bring-up (kind/minikube) | `pr/A-13-local-cluster` | TBD | Gouri |
@@ -368,6 +368,7 @@ kubectl rollout undo deployment/docsync
 | 1.8 | 2026-05-12 | Samarth | Sprint #3 PR7: A-07 / 4.14 Dockerfile basics, Dockerfile update, proofs, tracker (`spr7-dockerfile-basics`) |
 | 1.9 | 2026-05-12 | Samarth | Sprint #3 PR8: A-08 / 4.14 Dockerfile optimization, .dockerignore, proofs, tracker (`spr8-dockerfile-optimization`) |
 | 2.0 | 2026-05-12 | Samarth | Sprint #3 PR9: A-09 / 4.15 local build-run doc, docker-local-run.sh, proofs, tracker (`spr9-build-run-containers`) |
+| 2.1 | 2026-05-12 | Samarth | Sprint #3 PR10: A-10 / 4.15 debugging doc, docker-debug-check.sh, proofs, tracker (`spr10-container-debugging`) |
 
 ---
 
