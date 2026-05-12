@@ -10,7 +10,7 @@ Use a predictable prefix so reviewers can map proofs to assignments:
 docs/proofs/<assignment-id>-<topic>.png
 ```
 
-Example: `4.15-docker-ps.png`, `4.15-dbg-docker-logs.png`, `4.15-dbg-script.png`
+Example: `4.15-dbg-script.png`, `4.16-docker-push.png`, `4.16-ghcr-package.png`
 
 ---
 
@@ -238,6 +238,28 @@ Combined capture: **`docker build -t docsync:basic .`**, **`docker images`** (sh
 - The debug script **never** stops or removes containers; capture output after reproducing an issue.  
 - If **`docsync-local`** is missing, the script still prints useful **`docker ps`** context — screenshot that path too.  
 - Link to this checklist from the PR description when opening **PR10** for review.  
+
+---
+
+## Assignment 4.16 / A-11 — Docker registry & GHCR (`spr11-docker-registry-ghcr`)
+
+**Related doc:** [`docs/assignments/A-11-docker-registry-ghcr.md`](../assignments/A-11-docker-registry-ghcr.md) · **Tagging:** [`docs/registry/IMAGE_TAGGING_STRATEGY.md`](../registry/IMAGE_TAGGING_STRATEGY.md)
+
+### Proof checklist
+
+| # | Requirement | Command (or action) | Captured? |
+|---|----------------|---------------------|-----------|
+| 1 | Local + remote tags | `docker images` (show `docsync:local` and `ghcr.io/...`) | [ ] |
+| 2 | Tag command | `docker tag …` session | [ ] |
+| 3 | GHCR login | `docker login ghcr.io` (**token redacted / stdin**) | [ ] |
+| 4 | Push | `docker push ghcr.io/...` | [ ] |
+| 5 | Package page | GitHub **Packages** screenshot | [ ] |
+| 6 | Pull | `docker pull ghcr.io/...` | [ ] |
+
+### Submission notes
+
+- **Never** commit `.env`, PATs, or uncropped tokens — use placeholders in docs and blur screenshots.  
+- Link to this checklist from the PR description when opening **PR11** for review.  
 
 ---
 
