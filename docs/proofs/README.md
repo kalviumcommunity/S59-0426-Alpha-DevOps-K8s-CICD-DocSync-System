@@ -10,7 +10,7 @@ Use a predictable prefix so reviewers can map proofs to assignments:
 docs/proofs/<assignment-id>-<topic>.png
 ```
 
-Example: `4.17-kubectl-version.png`, `4.18-get-nodes.png`, `4.18-get-pods-A.png`, `4.19-kind-create.png`, `4.19-script-check.png`
+Example: `4.17-kubectl-version.png`, `4.18-get-nodes.png`, `4.18-get-pods-A.png`, `4.19-kind-create.png`, `4.19-script-check.png`, `4.20-get-pods.png`, `4.20-self-heal.png`
 
 ---
 
@@ -322,6 +322,28 @@ Combined capture: **`docker build -t docsync:basic .`**, **`docker images`** (sh
 
 - If you **cannot** run a local cluster, capture the **blocker** (e.g. Docker not running) plus `kubectl config get-contexts` and note instructor approval for shared cluster access.  
 - Link to this checklist from the PR description when opening **PR14** for review.  
+
+---
+
+## Assignment 4.20 / A-15 — Pods and ReplicaSets (`spr15-pods-replicasets`)
+
+**Related doc:** [`docs/assignments/A-15-pods-replicasets.md`](../assignments/A-15-pods-replicasets.md)
+
+### Proof checklist
+
+| # | Requirement | Command (or action) | Captured? |
+|---|----------------|---------------------|-----------|
+| 1 | Pod manifest | `k8s/pod.yaml` (editor or terminal) | [ ] |
+| 2 | ReplicaSet manifest | `k8s/replicaset.yaml` | [ ] |
+| 3 | Pods | `kubectl get pods` | [ ] |
+| 4 | ReplicaSets | `kubectl get rs` | [ ] |
+| 5 | Self-healing | Delete an RS-owned Pod; show replacement (`kubectl get pods -w` or before/after) | [ ] |
+| 6 | Read-only check script | `./scripts/k8s-pod-check.sh` | [ ] |
+
+### Submission notes
+
+- Prefer a **dedicated namespace** (e.g. `kubectl create ns docsync-a15`) if you already run the repo **Deployment** in `default`.  
+- Link to this checklist from the PR description when opening **PR15** for review.  
 
 ---
 
