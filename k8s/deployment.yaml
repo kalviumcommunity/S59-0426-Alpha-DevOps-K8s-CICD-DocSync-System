@@ -1,20 +1,32 @@
+# DocSync — production-style Deployment (Sprint #3 · A-16 / 4.21)
+# Compatible with k8s/service.yaml: Service selector matchLabels { app: docsync } must match Pod template labels below.
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  # name: used by kubectl as deployment/docsync
   name: docsync
   labels:
     app: docsync
     version: v1.2.0
 spec:
-  replicas: 3
+  # replicas: minimum 2 for HA; must stay in sync with resource headroom on your cluster
+  replicas: 2
+  # revisionHistoryLimit: how many old ReplicaSets to retain for kubectl rollout undo / history
+  revisionHistoryLimit: 5
+  # progressDeadlineSeconds: time allowed before the Deployment reports ProgressDeadlineExceeded
+  progressDeadlineSeconds: 600
   selector:
+    # matchLabels: MUST match template.metadata.labels — Service uses the same app label
     matchLabels:
       app: docsync
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      maxSurge: 1
+      # maxUnavailable: pods that may be down during rollout (0 = no voluntary loss below desired count)
       maxUnavailable: 0
+      # maxSurge: extra pods above desired count during rollout
+      maxSurge: 1
   template:
     metadata:
       labels:
@@ -23,9 +35,11 @@ spec:
     spec:
       containers:
         - name: docsync
+          # Replace ghcr.io/username with your GHCR org or user for a successful pull
           image: ghcr.io/username/docsync:v1.2.0
           ports:
-            - containerPort: 3000
+            - name: http
+              containerPort: 3000
               protocol: TCP
           env:
             - name: NODE_ENV

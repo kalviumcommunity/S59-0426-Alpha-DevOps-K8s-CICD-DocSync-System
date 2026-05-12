@@ -10,7 +10,7 @@ Use a predictable prefix so reviewers can map proofs to assignments:
 docs/proofs/<assignment-id>-<topic>.png
 ```
 
-Example: `4.17-kubectl-version.png`, `4.18-get-nodes.png`, `4.18-get-pods-A.png`, `4.19-kind-create.png`, `4.19-script-check.png`, `4.20-get-pods.png`, `4.20-self-heal.png`
+Example: `4.17-kubectl-version.png`, `4.18-get-nodes.png`, `4.18-get-pods-A.png`, `4.19-kind-create.png`, `4.19-script-check.png`, `4.20-get-pods.png`, `4.20-self-heal.png`, `4.21-rollout-status.png`, `4.21-script-deployment-check.png`
 
 ---
 
@@ -344,6 +344,28 @@ Combined capture: **`docker build -t docsync:basic .`**, **`docker images`** (sh
 
 - Prefer a **dedicated namespace** (e.g. `kubectl create ns docsync-a15`) if you already run the repo **Deployment** in `default`.  
 - Link to this checklist from the PR description when opening **PR15** for review.  
+
+---
+
+## Assignment 4.21 / A-16 — Kubernetes Deployments (`spr16-k8s-deployments`)
+
+**Related doc:** [`docs/assignments/A-16-k8s-deployments.md`](../assignments/A-16-k8s-deployments.md)
+
+### Proof checklist
+
+| # | Requirement | Command (or action) | Captured? |
+|---|----------------|---------------------|-----------|
+| 1 | Deployment manifest | `k8s/deployment.yaml` (editor or terminal) | [ ] |
+| 2 | Deployments | `kubectl get deployments` | [ ] |
+| 3 | ReplicaSets | `kubectl get rs` | [ ] |
+| 4 | Rollout status | `kubectl rollout status deployment/docsync` | [ ] |
+| 5 | Describe deployment | `kubectl describe deployment docsync` | [ ] |
+| 6 | Read-only check script | `./scripts/k8s-deployment-check.sh` | [ ] |
+
+### Submission notes
+
+- Redact **registry credentials** or **internal URLs** if required by your institution.  
+- Link to this checklist from the PR description when opening **PR16** for review.  
 
 ---
 

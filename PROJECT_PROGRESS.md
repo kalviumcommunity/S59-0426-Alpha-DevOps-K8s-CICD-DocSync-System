@@ -3,7 +3,7 @@
 **Course / initiative:** DevOps with Kubernetes & CI/CD  
 **Project codename:** DocSync — Real-Time Document Editing Service  
 **Repository:** `S59-0426-Alpha-DevOps-K8s-CICD-DocSync-System`  
-**Document version:** 2.6  
+**Document version:** 2.7  
 **Last updated:** May 12, 2026  
 **Active team size:** 2 (Samarth, Gouri)  
 
@@ -77,7 +77,7 @@ Supporting: ESLint, `npm ci`, `wget` (image health check), GitHub Actions `docke
 
 ### 3.4 Kubernetes setup
 
-- [x] `Deployment` (`k8s/deployment.yaml`): 3 replicas, rolling update strategy, probes, resource requests/limits  
+- [x] `Deployment` (`k8s/deployment.yaml`): ≥2 replicas, rolling update strategy, probes, resource requests/limits  
 - [x] `Service` (`k8s/service.yaml`): `ClusterIP`, port 80 → target 3000  
 - [ ] Ingress, TLS, and external DNS — *pending / environment-specific*  
 - [ ] Helm chart — *planned*  
@@ -134,7 +134,7 @@ Supporting: ESLint, `npm ci`, `wget` (image health check), GitHub Actions `docke
 | Services | Done | `ClusterIP` fronting port 80 → 3000 |
 | ConfigMaps | Planned | Externalize config beyond env block in manifest |
 | Secrets | Planned | Registry pull secrets if private; app secrets via Sealed Secrets or external store |
-| Scaling | Supported | `replicas` field (currently 3); HPA planned |
+| Scaling | Supported | `replicas` field (currently 2); HPA planned |
 | Rollbacks | Documented | `kubectl rollout undo` / revision pinning — see README pipeline narrative |
 | Ingress | Planned | NGINX / cloud LB integration TBD |
 | Helm usage | Planned | Chart for templated image tag and env values |
@@ -236,7 +236,7 @@ S59-0426-Alpha-DevOps-K8s-CICD-DocSync-System/
 | A-13 | Kubernetes / CI-CD | 4.18 — Understanding Kubernetes Cluster Architecture and Control Plane | `spr13-cluster-architecture` | In Review | Gouri |
 | A-14 | Kubernetes / CI-CD | 4.19 — Setting Up a Local Kubernetes Cluster (kind / Minikube / k3s) | `spr14-local-k8s-cluster` | In Review | Gouri |
 | A-15 | Kubernetes / CI-CD | 4.20 — Understanding Kubernetes Objects: Pods and ReplicaSets | `spr15-pods-replicasets` | In Review | Gouri |
-| A-16 | Kubernetes / CI-CD | CD scaffold / deploy job | `pr/A-16-cd-scaffold` | TBD | Gouri |
+| A-16 | Kubernetes / CI-CD | 4.21 — Creating and Managing Deployments | `spr16-k8s-deployments` | In Review | Gouri |
 | A-17 | Kubernetes / CI-CD | Pipeline documentation | `pr/A-17-pipeline-docs` | TBD | Gouri |
 | A-18 | Kubernetes / CI-CD | Rollback runbook & verification | `pr/A-18-rollback-runbook` | TBD | Gouri |
 | A-19 | Kubernetes / CI-CD | Secrets & environments design | `pr/A-19-secrets-design` | TBD | Gouri |
@@ -334,7 +334,7 @@ kubectl rollout undo deployment/docsync
 
 - **Documentation:** Strong (`README.md`, `docs/PIPELINE*.md`, this progress file).  
 - **Automation:** CI and registry path implemented; CD is intentionally scaffolded until cluster access is standardized.  
-- **Risk:** Production deploy automation blocked on secure kubeconfig handling — track under A-16 / secrets work.  
+- **Risk:** Production deploy automation blocked on secure kubeconfig handling — track under CD pipeline / secrets design work (e.g. A-19 and related assignments).  
 - **Team capacity:** Two active members; the Docker/Kubernetes split in §8 and §11 keeps ownership clear while both review boundary changes (e.g., image reference in manifests, workflow edits).
 
 ---
@@ -374,6 +374,7 @@ kubectl rollout undo deployment/docsync
 | 2.4 | 2026-05-12 | Gouri | Sprint #3 PR13: A-13 / 4.18 cluster architecture doc, K8S_CLUSTER_ARCHITECTURE.md, proofs (`spr13-cluster-architecture`) |
 | 2.5 | 2026-05-12 | Gouri | Sprint #3 PR14: A-14 / 4.19 local K8s cluster doc, k8s-local-cluster-check.sh, proofs (`spr14-local-k8s-cluster`) |
 | 2.6 | 2026-05-12 | Gouri | Sprint #3 PR15: A-15 / 4.20 Pods & ReplicaSets doc, k8s/pod.yaml, k8s/replicaset.yaml, k8s-pod-check.sh, proofs (`spr15-pods-replicasets`) |
+| 2.7 | 2026-05-12 | Gouri | Sprint #3 PR16: A-16 / 4.21 Deployments doc, k8s/deployment.yaml improvements, k8s-deployment-check.sh, proofs (`spr16-k8s-deployments`) |
 
 ---
 
