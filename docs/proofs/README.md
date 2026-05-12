@@ -10,7 +10,7 @@ Use a predictable prefix so reviewers can map proofs to assignments:
 docs/proofs/<assignment-id>-<topic>.png
 ```
 
-Example: `4.17-kubectl-version.png`, `4.18-get-nodes.png`, `4.18-get-pods-A.png`, `4.19-kind-create.png`, `4.19-script-check.png`, `4.20-get-pods.png`, `4.20-self-heal.png`, `4.21-rollout-status.png`, `4.21-script-deployment-check.png`
+Example: `4.17-kubectl-version.png`, `4.21-rollout-status.png`, `4.22-get-svc.png`, `4.22-port-forward.png`, `4.22-curl-health.png`, `4.22-script-service-check.png`
 
 ---
 
@@ -366,6 +366,29 @@ Combined capture: **`docker build -t docsync:basic .`**, **`docker images`** (sh
 
 - Redact **registry credentials** or **internal URLs** if required by your institution.  
 - Link to this checklist from the PR description when opening **PR16** for review.  
+
+---
+
+## Assignment 4.22 / A-17 — Kubernetes Services (`spr17-k8s-services`)
+
+**Related doc:** [`docs/assignments/A-17-k8s-services.md`](../assignments/A-17-k8s-services.md)
+
+### Proof checklist
+
+| # | Requirement | Command (or action) | Captured? |
+|---|----------------|---------------------|-----------|
+| 1 | ClusterIP manifest | `k8s/service.yaml` | [ ] |
+| 2 | NodePort manifest | `k8s/service-nodeport.yaml` | [ ] |
+| 3 | Services list | `kubectl get svc` | [ ] |
+| 4 | Describe ClusterIP | `kubectl describe svc docsync-service` | [ ] |
+| 5 | Port-forward | `kubectl port-forward svc/docsync-service 3000:80` | [ ] |
+| 6 | Health via forwarded port | `curl http://localhost:3000/health` | [ ] |
+| 7 | Read-only check script | `./scripts/k8s-service-check.sh` | [ ] |
+
+### Submission notes
+
+- Redact **Node internal IPs** if your institution requires it; **NodePort** values differ per cluster unless pinned.  
+- Link to this checklist from the PR description when opening **PR17** for review.  
 
 ---
 

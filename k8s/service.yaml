@@ -1,15 +1,25 @@
+# DocSync — ClusterIP Service (Sprint #3 · A-17 / 4.22)
+# Exposes the DocSync Deployment inside the cluster on port 80 → container port 3000.
+# DNS short name: docsync-service.<namespace>.svc.cluster.local
+---
 apiVersion: v1
 kind: Service
 metadata:
-  name: docsync
+  # name: stable DNS label used by other Pods and kubectl port-forward svc/docsync-service …
+  name: docsync-service
   labels:
     app: docsync
+    sprint.kalvium.dev/component: clusterip
 spec:
+  # ClusterIP: virtual IP reachable only inside the cluster (default Service type)
   type: ClusterIP
   selector:
+    # Must match Pod template labels on deployment/docsync (e.g. app: docsync)
     app: docsync
   ports:
-    - port: 80
+    - name: http
+      # port: Service port clients connect to inside the cluster
+      port: 80
+      # targetPort: containerPort on DocSync Pods (see k8s/deployment.yaml)
       targetPort: 3000
       protocol: TCP
-      name: http

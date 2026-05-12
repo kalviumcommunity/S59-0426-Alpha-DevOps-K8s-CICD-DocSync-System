@@ -102,7 +102,7 @@ The API server stores **desired** configuration (`spec`); controllers continuous
 | Concern | Manifest |
 |---------|----------|
 | **Stable app name** | `metadata.name: docsync` |
-| **Service wiring** | Pod labels **`app: docsync`** match `k8s/service.yaml` **selector** |
+| **Service wiring** | Pod labels **`app: docsync`** match **`docsync-service`** / **`docsync-nodeport`** **selectors** in `k8s/service.yaml` and `k8s/service-nodeport.yaml` |
 | **HTTP port** | Container listens on **3000**; Service maps **80 → 3000** |
 | **Health** | **Liveness** and **readiness** probes on `/health` |
 | **Capacity guardrails** | **requests** and **limits** for CPU/memory |
@@ -162,7 +162,7 @@ chmod +x scripts/k8s-deployment-check.sh
 
 - [ ] Explained **Deployment vs Pod** and **Deployment → ReplicaSet → Pod** chain  
 - [ ] Applied **`k8s/deployment.yaml`** in a cluster (or dry-run per instructor policy)  
-- [ ] Verified **labels** remain compatible with **`k8s/service.yaml`** (`app: docsync`)  
+- [ ] Verified **labels** remain compatible with **Services** (`app: docsync` matches `k8s/service.yaml` and `k8s/service-nodeport.yaml`)  
 - [ ] Inspected **rollout status** and **history**  
 - [ ] Ran **`scripts/k8s-deployment-check.sh`** (read-only)  
 - [ ] Captured proofs per **`docs/proofs/README.md`** (Assignment **4.21**)  
