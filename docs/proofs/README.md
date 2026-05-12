@@ -10,7 +10,7 @@ Use a predictable prefix so reviewers can map proofs to assignments:
 docs/proofs/<assignment-id>-<topic>.png
 ```
 
-Example: `4.8-git-version.png`, `4.9-github-pr.png`, `4.10-git-status.png`, `4.11-ls-la.png`, `4.12-docker-ps.png`
+Example: `4.8-git-version.png`, `4.9-github-pr.png`, `4.10-git-status.png`, `4.11-ls-la.png`, `4.12-docker-ps.png`, `4.13-docker-history.png`
 
 ---
 
@@ -119,6 +119,28 @@ Example: `4.8-git-version.png`, `4.9-github-pr.png`, `4.10-git-status.png`, `4.1
 
 - For **lifecycle**, exporting a PDF or PNG from slides is acceptable if terminal-only proof is insufficient.  
 - Link to this checklist from the PR description when opening **PR5** for review.  
+
+---
+
+## Assignment 4.13 / A-06 — Docker architecture (`spr6-docker-architecture`)
+
+**Related doc:** [`docs/assignments/A-06-docker-architecture.md`](../assignments/A-06-docker-architecture.md)
+
+### Proof checklist
+
+| # | Requirement | Command (or action) | Captured? |
+|---|----------------|---------------------|-----------|
+| 1 | Client + Server versions | `docker version` | [ ] |
+| 2 | Engine / driver summary | `docker info` (first screenful OK) | [ ] |
+| 3 | Local images | `docker images` | [ ] |
+| 4 | Containers | `docker ps` and/or `docker ps -a` | [ ] |
+| 5 | Image layer history | `docker history <image-name>` | [ ] |
+| 6 | Container metadata | `docker inspect <container-id>` | [ ] |
+
+### Submission notes
+
+- For **`docker inspect`**, JSON is long—crop to **State**, **Config**, or use `--format` in the screenshot caption.  
+- Link to this checklist from the PR description when opening **PR6** for review.  
 
 ---
 
