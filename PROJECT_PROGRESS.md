@@ -3,7 +3,7 @@
 **Course / initiative:** DevOps with Kubernetes & CI/CD  
 **Project codename:** DocSync — Real-Time Document Editing Service  
 **Repository:** `S59-0426-Alpha-DevOps-K8s-CICD-DocSync-System`  
-**Document version:** 1.7  
+**Document version:** 1.8  
 **Last updated:** May 12, 2026  
 **Active team size:** 2 (Samarth, Gouri)  
 
@@ -227,7 +227,7 @@ S59-0426-Alpha-DevOps-K8s-CICD-DocSync-System/
 | A-04 | Docker / Containerization | 4.11 — Linux Filesystem Structure & Permissions for DevOps Workflows | `spr4-linux-permissions` | In Review | Samarth |
 | A-05 | Docker / Containerization | 4.12 — Introduction to Containers and Containerization Concepts | `spr5-containerization-concepts` | In Review | Samarth |
 | A-06 | Docker / Containerization | 4.13 — Understanding Docker Architecture: Images, Containers, and Layers | `spr6-docker-architecture` | In Review | Samarth |
-| A-07 | Docker / Containerization | Dockerfile hardening (multi-stage, non-root) | `pr/A-07-dockerfile-hardening` | TBD | Samarth |
+| A-07 | Docker / Containerization | 4.14 — Writing Dockerfiles: Base Images, Layers, Caching, and Best Practices | `spr7-dockerfile-basics` | In Review | Samarth |
 | A-08 | Docker / Containerization | `.dockerignore` & image size tuning | `pr/A-08-dockerignore` | TBD | Samarth |
 | A-09 | Docker / Containerization | Local `docker run` & health validation | `pr/A-09-docker-run-health` | TBD | Samarth |
 | A-10 | Kubernetes / CI-CD | Kubernetes Deployment manifest | `pr/A-10-k8s-deployment` | TBD | Gouri |
@@ -365,6 +365,7 @@ kubectl rollout undo deployment/docsync
 | 1.5 | 2026-05-12 | Samarth | Sprint #3 PR4: A-04 / 4.11 Linux permissions doc, proofs checklist, tracker (`spr4-linux-permissions`) |
 | 1.6 | 2026-05-12 | Samarth | Sprint #3 PR5: A-05 / 4.12 containerization concepts doc, proofs checklist, tracker (`spr5-containerization-concepts`) |
 | 1.7 | 2026-05-12 | Samarth | Sprint #3 PR6: A-06 / 4.13 Docker architecture doc, proofs checklist, tracker (`spr6-docker-architecture`) |
+| 1.8 | 2026-05-12 | Samarth | Sprint #3 PR7: A-07 / 4.14 Dockerfile basics, Dockerfile update, proofs, tracker (`spr7-dockerfile-basics`) |
 
 ---
 

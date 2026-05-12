@@ -1,32 +1,33 @@
-# ---- Stage 1: Build ----
-FROM node:20-alpine AS builder
+# =============================================================================
+# DocSync — Node.js production image (Sprint #3 · Assignment 4.14)
+# =============================================================================
+# Single-stage build suitable for learning Dockerfile basics: base image,
+# dependency install with a lockfile, application source, exposed port, and
+# a production process command. Later sprints may reintroduce multi-stage
+# builds, non-root users, and HEALTHCHECK for hardening.
+# =============================================================================
 
-WORKDIR /app
-
-COPY package*.json ./
-RUN npm ci --only=production
-
-COPY src/ ./src/
-
-# ---- Stage 2: Production ----
+# Official Node.js 20 runtime on Alpine Linux — small image, musl libc.
 FROM node:20-alpine
 
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
-
+# All following commands run relative to /app; keeps paths predictable.
 WORKDIR /app
 
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/src ./src
-COPY package*.json ./
+# Copy manifest files first so this layer can be cached when only src/ changes.
+COPY package.json package-lock.json ./
 
+# Reproducible install from lockfile; omit devDependencies for production image.
+RUN npm ci --omit=dev
+
+# Application entrypoint and modules (Express + WebSocket service).
+COPY src/ ./src/
+
+# Runtime configuration consumed by src/server.js.
 ENV NODE_ENV=production
 ENV PORT=3000
 
+# Document the port the HTTP server listens on (see EXPOSE in Docker docs).
 EXPOSE 3000
 
-USER appuser
-
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD wget --no-verbose --tries=1 --spider http://localhost:3000/health || exit 1
-
+# Start the API/WebSocket server directly (matches package.json "start" script).
 CMD ["node", "src/server.js"]
