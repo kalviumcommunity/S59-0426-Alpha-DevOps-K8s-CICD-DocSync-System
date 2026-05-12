@@ -1,4 +1,4 @@
-# DocSync — production-style Deployment (Sprint #3 · A-16 / 4.21)
+# DocSync — production-style Deployment (Sprint #3 · A-16 / 4.21, probes A-18 / 4.25)
 # ClusterIP / NodePort Services in k8s/service.yaml and k8s/service-nodeport.yaml select Pods with label { app: docsync } — keep in sync with template.metadata.labels.
 ---
 apiVersion: apps/v1
@@ -53,6 +53,8 @@ spec:
             limits:
               cpu: "500m"
               memory: "256Mi"
+          # livenessProbe: kubelet restarts the container after consecutive failures (recover deadlocks / hung workers).
+          # DocSync exposes GET /health on the HTTP server (port 3000).
           livenessProbe:
             httpGet:
               path: /health
@@ -61,6 +63,7 @@ spec:
             periodSeconds: 30
             timeoutSeconds: 3
             failureThreshold: 3
+          # readinessProbe: kubelet marks the Pod NotReady on failure → removed from Service Endpoints until healthy.
           readinessProbe:
             httpGet:
               path: /health
