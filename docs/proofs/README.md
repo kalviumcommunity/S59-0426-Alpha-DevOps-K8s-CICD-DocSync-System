@@ -10,7 +10,7 @@ Use a predictable prefix so reviewers can map proofs to assignments:
 docs/proofs/<assignment-id>-<topic>.png
 ```
 
-Example: `4.17-kubectl-version.png`, `4.18-get-nodes.png`, `4.18-get-pods-A.png`
+Example: `4.17-kubectl-version.png`, `4.18-get-nodes.png`, `4.18-get-pods-A.png`, `4.19-kind-create.png`, `4.19-script-check.png`
 
 ---
 
@@ -300,6 +300,28 @@ Combined capture: **`docker build -t docsync:basic .`**, **`docker images`** (sh
 
 - Redact **internal IPs** or **cloud account IDs** if your institution requires it.  
 - Link to this checklist from the PR description when opening **PR13** for review.  
+
+---
+
+## Assignment 4.19 / A-14 — Local Kubernetes cluster (`spr14-local-k8s-cluster`)
+
+**Related doc:** [`docs/assignments/A-14-local-k8s-cluster.md`](../assignments/A-14-local-k8s-cluster.md)
+
+### Proof checklist
+
+| # | Requirement | Command (or action) | Captured? |
+|---|----------------|---------------------|-----------|
+| 1 | Cluster creation | `kind create cluster --name docsync-cluster` (or equivalent Minikube/k3s) | [ ] |
+| 2 | Cluster info | `kubectl cluster-info` | [ ] |
+| 3 | Nodes | `kubectl get nodes` | [ ] |
+| 4 | All Pods | `kubectl get pods -A` | [ ] |
+| 5 | Current context | `kubectl config current-context` (and/or `kubectl config get-contexts`) | [ ] |
+| 6 | Read-only check script | `./scripts/k8s-local-cluster-check.sh` | [ ] |
+
+### Submission notes
+
+- If you **cannot** run a local cluster, capture the **blocker** (e.g. Docker not running) plus `kubectl config get-contexts` and note instructor approval for shared cluster access.  
+- Link to this checklist from the PR description when opening **PR14** for review.  
 
 ---
 
