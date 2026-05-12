@@ -10,7 +10,7 @@ Use a predictable prefix so reviewers can map proofs to assignments:
 docs/proofs/<assignment-id>-<topic>.png
 ```
 
-Example: `4.8-git-version.png`, `4.9-github-pr.png`
+Example: `4.8-git-version.png`, `4.9-github-pr.png`, `4.10-git-status.png`
 
 ---
 
@@ -56,6 +56,27 @@ Example: `4.8-git-version.png`, `4.9-github-pr.png`
 
 - For **workflow** proof, include the run **name**, **branch**, and **conclusion** (success/failure) in frame.  
 - Link to this checklist from the PR description when opening **PR2** for review.  
+
+---
+
+## Assignment 4.10 / A-03 — Git workflow & conventions (`spr3-git-workflow`)
+
+**Related doc:** [`docs/assignments/A-03-git-workflow.md`](../assignments/A-03-git-workflow.md)
+
+### Proof checklist
+
+| # | Requirement | Command (or action) | Captured? |
+|---|----------------|---------------------|-----------|
+| 1 | Git branches | `git branch` or GitHub branch dropdown | [ ] |
+| 2 | Working tree state | `git status` | [ ] |
+| 3 | Recent commits (terminal) | `git log --oneline -n 10` | [ ] |
+| 4 | Commit history (GitHub UI) | Repository **Commits** tab for your branch | [ ] |
+| 5 | PR creation | “Open pull request” / compare view for this branch | [ ] |
+
+### Submission notes
+
+- For **commit history** vs **git log**, include one terminal capture and one GitHub capture so reviewers can correlate SHAs.  
+- Link to this checklist from the PR description when opening **PR3** for review.  
 
 ---
 
