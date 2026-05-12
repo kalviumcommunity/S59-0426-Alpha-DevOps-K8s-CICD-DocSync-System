@@ -10,7 +10,7 @@ Use a predictable prefix so reviewers can map proofs to assignments:
 docs/proofs/<assignment-id>-<topic>.png
 ```
 
-Example: `4.15-dbg-script.png`, `4.16-docker-push.png`, `4.16-ghcr-package.png`
+Example: `4.16-docker-push.png`, `4.17-kubectl-version.png`, `4.17-get-nodes.png`
 
 ---
 
@@ -260,6 +260,26 @@ Combined capture: **`docker build -t docsync:basic .`**, **`docker images`** (sh
 
 - **Never** commit `.env`, PATs, or uncropped tokens — use placeholders in docs and blur screenshots.  
 - Link to this checklist from the PR description when opening **PR11** for review.  
+
+---
+
+## Assignment 4.17 / A-12 — Kubernetes intro (`spr12-kubernetes-intro`)
+
+**Related doc:** [`docs/assignments/A-12-kubernetes-intro.md`](../assignments/A-12-kubernetes-intro.md)
+
+### Proof checklist
+
+| # | Requirement | Command (or action) | Captured? |
+|---|----------------|---------------------|-----------|
+| 1 | kubectl client | `kubectl version --client` | [ ] |
+| 2 | Cluster reachability | `kubectl cluster-info` | [ ] |
+| 3 | Node inventory | `kubectl get nodes` | [ ] |
+| 4 | Architecture / theory | Diagram, slides, or this assignment doc (cropped) | [ ] |
+
+### Submission notes
+
+- If you **lack** a live cluster, screenshot the **error** plus your **kubeconfig context** list (`kubectl config get-contexts`) and note the blocker for the instructor.  
+- Link to this checklist from the PR description when opening **PR12** for review.  
 
 ---
 
