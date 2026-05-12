@@ -3,7 +3,7 @@
 **Course / initiative:** DevOps with Kubernetes & CI/CD  
 **Project codename:** DocSync — Real-Time Document Editing Service  
 **Repository:** `S59-0426-Alpha-DevOps-K8s-CICD-DocSync-System`  
-**Document version:** 2.8  
+**Document version:** 2.9  
 **Last updated:** May 12, 2026  
 **Active team size:** 2 (Samarth, Gouri)  
 
@@ -239,7 +239,7 @@ S59-0426-Alpha-DevOps-K8s-CICD-DocSync-System/
 | A-15 | Kubernetes / CI-CD | 4.20 — Understanding Kubernetes Objects: Pods and ReplicaSets | `spr15-pods-replicasets` | In Review | Gouri |
 | A-16 | Kubernetes / CI-CD | 4.21 — Creating and Managing Deployments | `spr16-k8s-deployments` | In Review | Gouri |
 | A-17 | Kubernetes / CI-CD | 4.22 — Configuring Kubernetes Services (ClusterIP, NodePort) | `spr17-k8s-services` | In Review | Gouri |
-| A-18 | Kubernetes / CI-CD | Rollback runbook & verification | `pr/A-18-rollback-runbook` | TBD | Gouri |
+| A-18 | Kubernetes / CI-CD | 4.25 — Implementing Health Checks: Liveness and Readiness Probes | `spr18-health-checks-probes` | In Review | Gouri |
 | A-19 | Kubernetes / CI-CD | Secrets & environments design | `pr/A-19-secrets-design` | TBD | Gouri |
 | A-20 | Kubernetes / CI-CD | Sprint retrospective & demo assets | `pr/A-20-sprint-retro-demo` | TBD | Gouri |
 
@@ -379,6 +379,7 @@ kubectl rollout undo deployment/docsync
 | 2.6 | 2026-05-12 | Gouri | Sprint #3 PR15: A-15 / 4.20 Pods & ReplicaSets doc, k8s/pod.yaml, k8s/replicaset.yaml, k8s-pod-check.sh, proofs (`spr15-pods-replicasets`) |
 | 2.7 | 2026-05-12 | Gouri | Sprint #3 PR16: A-16 / 4.21 Deployments doc, k8s/deployment.yaml improvements, k8s-deployment-check.sh, proofs (`spr16-k8s-deployments`) |
 | 2.8 | 2026-05-12 | Gouri | Sprint #3 PR17: A-17 / 4.22 Services doc, service.yaml rename+comments, service-nodeport.yaml, k8s-service-check.sh, proofs (`spr17-k8s-services`) |
+| 2.9 | 2026-05-12 | Gouri | Sprint #3 PR18: A-18 / 4.25 probes doc, deployment probe comments, k8s-health-check.sh, proofs (`spr18-health-checks-probes`) |
 
 ---
 

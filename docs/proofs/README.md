@@ -10,7 +10,7 @@ Use a predictable prefix so reviewers can map proofs to assignments:
 docs/proofs/<assignment-id>-<topic>.png
 ```
 
-Example: `4.17-kubectl-version.png`, `4.21-rollout-status.png`, `4.22-get-svc.png`, `4.22-port-forward.png`, `4.22-curl-health.png`, `4.22-script-service-check.png`
+Example: `4.17-kubectl-version.png`, `4.21-rollout-status.png`, `4.22-get-svc.png`, `4.25-deployment-probes.png`, `4.25-script-health-check.png`
 
 ---
 
@@ -389,6 +389,28 @@ Combined capture: **`docker build -t docsync:basic .`**, **`docker images`** (sh
 
 - Redact **Node internal IPs** if your institution requires it; **NodePort** values differ per cluster unless pinned.  
 - Link to this checklist from the PR description when opening **PR17** for review.  
+
+---
+
+## Assignment 4.25 / A-18 — Health checks & probes (`spr18-health-checks-probes`)
+
+**Related doc:** [`docs/assignments/A-18-health-checks-probes.md`](../assignments/A-18-health-checks-probes.md)
+
+### Proof checklist
+
+| # | Requirement | Command (or action) | Captured? |
+|---|----------------|---------------------|-----------|
+| 1 | Deployment probes | `k8s/deployment.yaml` (`livenessProbe` / `readinessProbe`) | [ ] |
+| 2 | Describe deployment | `kubectl describe deployment docsync` | [ ] |
+| 3 | Describe pod (probe events) | `kubectl describe pod <pod-name>` | [ ] |
+| 4 | Rollout status | `kubectl rollout status deployment/docsync` | [ ] |
+| 5 | `/health` via port-forward | `kubectl port-forward svc/docsync-service 3000:80` + `curl http://localhost:3000/health` | [ ] |
+| 6 | Read-only check script | `./scripts/k8s-health-check.sh` | [ ] |
+
+### Submission notes
+
+- If **no cluster** access, capture manifest review notes plus instructor approval for shared environment screenshots.  
+- Link to this checklist from the PR description when opening **PR18** for review.  
 
 ---
 
