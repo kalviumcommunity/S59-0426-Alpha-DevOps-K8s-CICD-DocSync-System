@@ -10,7 +10,7 @@ Use a predictable prefix so reviewers can map proofs to assignments:
 docs/proofs/<assignment-id>-<topic>.png
 ```
 
-Example: `4.8-git-version.png`, `4.9-github-pr.png`, `4.10-git-status.png`, `4.11-ls-la.png`, `4.12-docker-ps.png`, `4.13-docker-history.png`, `4.14-docker-build.png`
+Example: `4.8-git-version.png`, `4.14-docker-lab-terminal.png`, `4.14-opt-docker-history.png`
 
 ---
 
@@ -169,6 +169,30 @@ Combined capture: **`docker build -t docsync:basic .`**, **`docker images`** (sh
 - **Submitted artifact:** [`4.14-docker-lab-terminal.png`](4.14-docker-lab-terminal.png) (build + images + run in one capture).  
 - Redact registry credentials or internal hostnames if visible in terminal tabs.  
 - Link to this checklist from the PR description when opening **PR7** for review.  
+
+---
+
+## Assignment 4.14 (optimization) / A-08 — Dockerfile optimization (`spr8-dockerfile-optimization`)
+
+**Related doc:** [`docs/assignments/A-08-dockerfile-optimization.md`](../assignments/A-08-dockerfile-optimization.md)
+
+### Proof checklist
+
+| # | Requirement | Command (or action) | Captured? |
+|---|----------------|---------------------|-----------|
+| 1 | Optimized multi-stage `Dockerfile` | IDE / GitHub view | [ ] |
+| 2 | `.dockerignore` | IDE / GitHub view | [ ] |
+| 3 | Successful image build | `docker build -t docsync:optimized .` | [ ] |
+| 4 | Layer history | `docker history docsync:optimized` | [ ] |
+| 5 | Running container | `docker run --rm -p 3000:3000 docsync:optimized` | [ ] |
+| 6 | Health endpoint | `curl http://localhost:3000/health` | [ ] |
+| 7 | Image config / healthcheck | `docker inspect docsync:optimized` (Healthcheck / User) | [ ] |
+| 8 | Non-root user | `docker run --rm docsync:optimized id` or `whoami` | [ ] |
+
+### Submission notes
+
+- Prefer **one PR** attaching all eight proofs or a single consolidated terminal capture where unambiguous.  
+- Link to this checklist from the PR description when opening **PR8** for review.  
 
 ---
 

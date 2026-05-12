@@ -1,10 +1,48 @@
+# =============================================================================
+# DocSync — Docker build context exclusions (PR8 · Assignment 4.14 optimization)
+# =============================================================================
+# Smaller context = faster uploads to the daemon, fewer accidental leaks into
+# image layers, and better cache hit rates when irrelevant files change.
+# =============================================================================
+
+# Installed locally; always recreated inside the image with npm ci
 node_modules
-npm-debug.log
+
+# Logs & package manager noise
+npm-debug.log*
+pnpm-debug.log*
+yarn-error.log*
+*.log
+
+# Version control & CI definitions (not used at runtime)
 .git
 .github
+
+# Kubernetes & docs — shipped separately from the app container artifact
 k8s
+docs
+
+# Tests & coverage — not part of production runtime filesystem
 tests
-*.md
-.dockerignore
+coverage
+**/.nyc_output
+
+# Secrets & local env (never bake credentials into an image)
 .env
 .env.*
+
+# Markdown / project prose (not required to run Node server)
+*.md
+
+# Editor / OS clutter
+.DS_Store
+.idea
+.vscode
+.cursor
+
+# Optional build output (if introduced later)
+dist
+build
+
+# Meta: do not send ignore-file churn into the context
+.dockerignore
