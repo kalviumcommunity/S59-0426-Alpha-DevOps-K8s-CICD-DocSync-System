@@ -10,7 +10,7 @@ Use a predictable prefix so reviewers can map proofs to assignments:
 docs/proofs/<assignment-id>-<topic>.png
 ```
 
-Example: `4.14-docker-lab-terminal.png`, `4.15-docker-ps.png`, `4.15-script-run.png`
+Example: `4.15-docker-ps.png`, `4.15-dbg-docker-logs.png`, `4.15-dbg-script.png`
 
 ---
 
@@ -215,6 +215,29 @@ Combined capture: **`docker build -t docsync:basic .`**, **`docker images`** (sh
 
 - If port **3000** is busy, use **`HOST_PORT=3001 ./scripts/docker-local-run.sh`** and capture `curl` against that port.  
 - Link to this checklist from the PR description when opening **PR9** for review.  
+
+---
+
+## Assignment 4.15 (debugging) / A-10 — Container debugging (`spr10-container-debugging`)
+
+**Related doc:** [`docs/assignments/A-10-container-debugging.md`](../assignments/A-10-container-debugging.md)
+
+### Proof checklist
+
+| # | Requirement | Command (or action) | Captured? |
+|---|----------------|---------------------|-----------|
+| 1 | Running / all containers | `docker ps` / `docker ps -a` | [ ] |
+| 2 | Application logs | `docker logs docsync-local` | [ ] |
+| 3 | Configuration & state | `docker inspect docsync-local` | [ ] |
+| 4 | In-container shell / probe | `docker exec -it docsync-local sh` (or non-interactive `docker exec … id`) | [ ] |
+| 5 | Health / connectivity | `curl http://localhost:3000/health` +/or inspect health JSON | [ ] |
+| 6 | Read-only debug script | `./scripts/docker-debug-check.sh` | [ ] |
+
+### Submission notes
+
+- The debug script **never** stops or removes containers; capture output after reproducing an issue.  
+- If **`docsync-local`** is missing, the script still prints useful **`docker ps`** context — screenshot that path too.  
+- Link to this checklist from the PR description when opening **PR10** for review.  
 
 ---
 
