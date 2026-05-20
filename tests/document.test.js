@@ -72,6 +72,21 @@ describe("DocumentStore", () => {
     assert.ok(list.every((d) => d.id && d.title));
   });
 
+  it("should delete a document", () => {
+    const store = new DocumentStore();
+    const doc = store.create("Delete Me");
+
+    assert.equal(store.delete(doc.id), true);
+    assert.equal(store.get(doc.id), null);
+    assert.equal(store.list().length, 0);
+  });
+
+  it("should return false when deleting a missing document", () => {
+    const store = new DocumentStore();
+
+    assert.equal(store.delete("missing-id"), false);
+  });
+
   it("should retrieve a specific historical version", () => {
     const store = new DocumentStore();
     const doc = store.create("Versioned Doc");

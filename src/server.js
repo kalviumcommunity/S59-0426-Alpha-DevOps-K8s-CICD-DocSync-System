@@ -1,5 +1,6 @@
 const express = require("express");
 const http = require("http");
+const path = require("path");
 const { WebSocketServer } = require("ws");
 const { DocumentStore } = require("./document");
 
@@ -8,8 +9,10 @@ const server = http.createServer(app);
 const wss = new WebSocketServer({ server, path: "/ws" });
 
 const store = new DocumentStore();
+const publicDir = path.join(__dirname, "..", "public");
 
 app.use(express.json());
+app.use(express.static(publicDir));
 
 app.get("/health", (_req, res) => {
   res.json({ status: "healthy", uptime: process.uptime() });
@@ -46,6 +49,15 @@ app.put("/api/documents/:id", (req, res) => {
     const status = err.message.includes("conflict") ? 409 : 404;
     res.status(status).json({ error: err.message });
   }
+});
+
+app.delete("/api/documents/:id", (req, res) => {
+  const deleted = store.delete(req.params.id);
+  if (!deleted) {
+    return res.status(404).json({ error: "Document not found" });
+  }
+  broadcastDeleted(req.params.id);
+  res.status(204).send();
 });
 
 const clients = new Map();
@@ -85,9 +97,23 @@ function broadcast(documentId, doc) {
   }
 }
 
+function broadcastDeleted(documentId) {
+  const subscribers = clients.get(documentId);
+  if (!subscribers) return;
+
+  const payload = JSON.stringify({ type: "deleted", documentId });
+  for (const client of subscribers) {
+    if (client.readyState === client.OPEN) {
+      client.send(payload);
+    }
+  }
+  clients.delete(documentId);
+}
+
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
   console.log(`DocSync server running on port ${PORT}`);
+  console.log(`UI: http://localhost:${PORT}/`);
 });
 
 module.exports = { app, server };
