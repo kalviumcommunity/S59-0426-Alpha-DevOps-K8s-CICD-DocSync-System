@@ -49,6 +49,10 @@ class DocumentStore {
     return doc;
   }
 
+  delete(id) {
+    return this.documents.delete(id);
+  }
+
   list() {
     return Array.from(this.documents.values()).map(({ id, title, version, lastModified }) => ({
       id,

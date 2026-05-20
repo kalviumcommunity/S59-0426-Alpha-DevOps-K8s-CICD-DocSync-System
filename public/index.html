@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>DocSync</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="brand">
+        <h1>DocSync</h1>
+        <p class="tagline">Real-time document editing</p>
+      </div>
+      <div class="header-status">
+        <span id="ws-status" class="badge badge-muted">Offline</span>
+        <span id="api-status" class="badge badge-muted">Checking…</span>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside class="sidebar">
+        <form id="create-form" class="create-form">
+          <input
+            type="text"
+            id="new-title"
+            placeholder="New document title"
+            required
+            maxlength="120"
+            autocomplete="off"
+          />
+          <button type="submit">Create</button>
+        </form>
+        <ul id="doc-list" class="doc-list" aria-label="Documents"></ul>
+        <p id="list-empty" class="hint">No documents yet. Create one above.</p>
+      </aside>
+
+      <section class="editor-panel" aria-live="polite">
+        <div id="editor-empty" class="editor-empty">
+          <p>Select a document or create a new one.</p>
+        </div>
+        <div id="editor-active" class="editor-active hidden">
+          <div class="editor-toolbar">
+            <h2 id="doc-title"></h2>
+            <span id="doc-meta" class="meta"></span>
+          </div>
+          <textarea
+            id="doc-content"
+            placeholder="Start typing…"
+            spellcheck="true"
+          ></textarea>
+          <div class="editor-actions">
+            <button type="button" id="save-btn" class="btn-primary">Save</button>
+            <button type="button" id="reload-btn" class="btn-secondary">Reload</button>
+            <button type="button" id="delete-btn" class="btn-danger">Delete</button>
+            <span id="save-status" class="save-status" role="status"></span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="/js/app.js" defer></script>
+  </body>
+</html>
